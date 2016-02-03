@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title> Well Traveled: Travel Itinerary Creator </title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false&key=AIzaSyC-m1tCw8sr4faPxPJmrD04t-PByxlUQDI"></script>
+
+
+    <!-- Fonts -->
+    <link href="http://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Raleway&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+
+
+    <style>
+      /*Google map setup*/
+      html, body {
+        height: 100%; margin: 0; padding: 0;
+      }
+      #map {
+        width: 100%;
+        min-height: 400px;
+      }
+
+      body {
+        font-family: 'Raleway',sans-serif;
+        color:white;
+        size: 26px;
+      }
+      h1 {
+        font-family: "Poiret One";
+        text-transform: uppercase;
+        font-size: 3em;
+        color: black;
+      }
+
+      h2 {
+        text-align: center;
+        font-family: "Poiret One";
+        font-size: 2em;
+        color: #dbf0ff;
+      }
+
+      section.module {
+        height:670px;
+        background-position: 50% 50%;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+        margin-left: 0px;
+        margin-right:0px;
+      }
+
+      /*Page One*/
+      section.pageOne{
+        background-image: url(bergen.jpg);
+        margin-top:-10px;
+      }
+      .maintitle {
+        margin-top: 200px;
+      }
+      .title {
+        text-align: center;
+        padding-top: 30px;
+        margin: 10px auto;
+      }
+      .row {
+        text-align: center;
+      }
+      h3 {
+        color: black;
+        font-family: "Poiret One";
+        padding-left:10px;
+        margin: 0 auto;
+      }
+      label {
+        display: block;
+        width: 130px;
+      }
+      .inputBox {
+        display:block;
+        background: transparent;
+        border: 1.5px solid black;
+        width: 320px;
+        margin: 10px auto;
+        padding: 5px;
+        font-family: 'Raleway';
+        font-size: 1.5em;
+        font-weight: 400px;
+        color: black;
+      }
+      input.form {
+        font-family: 'Raleway';
+        text-transform: uppercase;
+        font-size: 15px;
+        padding: 5px;
+        display: block;
+        background: transparent;
+        border: 1.5px solid black;
+        text-align: center;
+        margin: 10px auto;
+      }
+
+      /*Page Two*/
+      section.pageTwo{
+        height:570px !important;
+      }
+      .container-fluid {
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .addHotel {
+        background-image: url(hoteldarker.jpg)
+      }
+      .addHotel:hover {
+        background-image: url(hotel.jpg);
+      }
+      .addTravel {
+        background-image: url(flydarker.jpg)
+      }
+      .addTravel:hover {
+        background-image: url(fly.jpg);
+      }
+      .addActivities {
+        background-image: url(activitiesdarker.jpg)
+      }
+      .addActivities:hover {
+        background-image: url(activities.jpg);
+      }
+      .col1 {
+        width: 33.33%;
+        float:left;
+        height: 570px;
+        min-width: 350px;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+
+
+      .itineraryheader {
+        text-align: center;
+        margin: 0 auto;
+        width:100%;
+        background: rgba(255,255,255,0.1);
+
+      }
+      input.input {
+        font-family: 'Raleway';
+        font-size: 12px;
+        color: white;
+        text-align: center;
+        margin: 0px auto;
+        background: transparent;
+        border: 0px;
+        width: 200px;
+        padding:5px;
+        font-weight: 400px;
+        margin-top: 3px;
+      }
+      input.headliner {
+        font-size: 18px;
+        width: 250px;
+        display: block;
+      }
+
+      div.airport{
+        display: inline-block;
+        padding: 10px;
+        height: 35px;
+      }
+      div.travel {
+        background: rgba(255,255,255,0.1);
+        padding-bottom: 20px;
+        height: 70px
+      }
+
+      input.input2 {
+        font-family: 'Raleway';
+        font-size: 12px;
+        color: white;
+        text-align: center;
+        margin: 0px auto;
+        background: transparent;
+        border: 0px;
+        padding:2px;
+        font-weight: 400px;
+        margin-top: 0px;
+      }
+
+      .departing {
+        width: 130px;
+      }
+      .arriving {
+        width: 130px
+      }
+      input.input2.time {
+        font-size: 18px;
+        width:100px;
+        margin-bottom: 0px;
+      }
+      input.input2.time2 {
+        font-size: 18px;
+        width:60px;
+        margin-bottom: 20px;
+      }
+      .left {
+        width: 120px;
+        padding-left: 5px;
+        padding-right: 5px;
+        display: inline-block;
+      }
+      .right {
+        width: 200px;
+        padding-top:10px;
+        display: inline-block;
+      }
+
+      input.input2.headliner {
+        text-transform: uppercase;
+        color: pink;
+        width:55px;
+      }
+
+      h4 {
+        font-size: 12px;
+        padding: 2px;
+        margin: 0 auto;
+      }
+      textarea {
+        font-family: 'Raleway';
+        font-size: 11px;
+        color: white;
+        margin: 0px auto;
+        background: transparent;
+        border: 0px;
+        padding-left:5px;
+        padding-right: 5px;
+        font-weight: 400px;
+        margin: 0 auto;
+        display:inline-block;
+      }
+
+      /*Page Three*/
+      section.pageThree{
+        background-image: url(bergen.jpg);
+      }
+      .headertext {
+        color: black !important;
+        text-align: left !important;
+        margin: 0 0 0 20px;
+      }
+      div.header {
+        border-top: 5px solid black;
+      }
+      .pagedividerarrow {
+        width: 0;
+        height: 0;
+        border-left: 40px solid transparent;
+        border-right: 40px solid transparent;
+        border-top: 40px solid black;
+        margin-left: 80%;
+      }
+      div.placessearchsection h3 {
+        display: inline-block;
+      }
+      .placessearch {
+        display:inline-block;
+        background: transparent;
+        border: 1.5px solid black;
+        width: 320px;
+        margin: 15px auto;
+        padding: 5px;
+        font-family: 'Raleway';
+        font-size: 1em;
+        font-weight: 40px;
+        color: black;
+      }
+
+    </style>
+  </head>
+  <body>
+    <section class="module pageOne">
+      <div class="title">
+        <h1 class="maintitle"> Itinerary Planner</h1>
+        <div class="row">
+          <h3>I'm traveling to: </h3>
+          <input class="inputBox" type="text" name="destination" id="destination" placeholder="City (e.g., Barcelona or Guangzhou)" maxlength="35">
+          <input type="submit" class="form" id="form">
+        </div>
+
+      </div>
+    </section>
+
+    <section class="module pageTwo">
+
+      <div class="container-fluid">
+
+        <!-- //First Column: Area for you to type out/view your FLIGHT info -->
+        <div class="col1 addTravel">
+          <h2 class="header">Flights</h2>
+          <!-- Flight #1 -->
+          <div class="itineraryheader">
+            <input type="text" class="input headliner" placeholder="Airline | Flight #" maxlength="40">
+            <input type="text" class="input dates" placeholder="Date(s)" maxlength="15">
+          </div>
+            <div class="travel">
+              <div class="airport departing">
+
+              <input type="text" class="input2 headliner" placeholder="Airport" maxlength="3">
+              <input type="text" class="input2 time" placeholder="Time" maxlength="8">
+              </div>
+              <div class= "airport">
+              <img src="planeicon_white.png">
+              </div>
+              <div class="airport arriving">
+
+              <input type="text" class="input2 headliner" placeholder="Airport" maxlength="3">
+              <input type="text" class="input2 time" placeholder="Time" maxlength="8">
+              </div>
+          </div>
+          <!-- Flight #2 -->
+          <div class="itineraryheader">
+            <input type="text" class="input headliner" placeholder="Airline | Flight #" maxlength="40">
+            <input type="text" class="input dates" placeholder="Date(s)" maxlength="15">
+          </div>
+            <div class="travel">
+              <div class="airport departing">
+
+              <input type="text" class="input2 headliner" placeholder="Airport" maxlength="3">
+              <input type="text" class="input2 time" placeholder="Time" maxlength="8">
+              </div>
+              <div class= "airport">
+              <img src="planeicon_white.png">
+              </div>
+              <div class="airport arriving">
+
+              <input type="text" class="input2 headliner" placeholder="Airport" maxlength="3">
+              <input type="text" class="input2 time" placeholder="Time" maxlength="8">
+              </div>
+          </div>
+          <!-- Flight #3 -->
+          <div class="itineraryheader">
+            <input type="text" class="input headliner" placeholder="Airline | Flight #" maxlength="40">
+            <input type="text" class="input dates" placeholder="Date(s)" maxlength="15">
+          </div>
+            <div class="travel">
+              <div class="airport departing">
+
+              <input type="text" class="input2 headliner" placeholder="Airport" maxlength="3">
+              <input type="text" class="input2 time" placeholder="Time" maxlength="8">
+              </div>
+              <div class= "airport">
+              <img src="planeicon_white.png">
+              </div>
+              <div class="airport arriving">
+
+              <input type="text" class="input2 headliner" placeholder="Airport" maxlength="3">
+              <input type="text" class="input2 time" placeholder="Time" maxlength="8">
+              </div>
+          </div>
+        </div>
+
+        <!-- //Second Column: Area for you to type out/view your HOTEL info -->
+        <div class="col1 addHotel">
+          <h2 class="header">Hotels</h2>
+          <!-- Hotel #1 -->
+          <div class="itineraryheader">
+            <input type="text" class="input headliner" placeholder="Hotel Name" maxlength="40">
+            <input type="text" class="input dates" placeholder="Address" maxlength="80">
+          </div>
+            <div class="travel">
+              <div class="airport departing">
+
+              <h4>CHECK-IN:</h4>
+              <input type="text" class="input2 time" placeholder="Date | Time" maxlength="12">
+              </div>
+              <div class= "airport">
+              <img src="hotelicon_white.png">
+              </div>
+              <div class="airport arriving">
+
+              <h4>CHECK-OUT:</h4>
+              <input type="text" class="input2 time" placeholder="Date | Time" maxlength="12">
+              </div>
+          </div>
+          <!-- Hotel #2 -->
+          <div class="itineraryheader">
+            <input type="text" class="input headliner" placeholder="Hotel Name" maxlength="40">
+            <input type="text" class="input dates" placeholder="Address" maxlength="80">
+          </div>
+            <div class="travel">
+              <div class="airport departing">
+
+              <h4>CHECK-IN:</h4>
+              <input type="text" class="input2 time" placeholder="Date | Time" maxlength="12">
+              </div>
+              <div class= "airport">
+              <img src="hotelicon_white.png">
+              </div>
+              <div class="airport arriving">
+
+              <h4>CHECK-OUT:</h4>
+              <input type="text" class="input2 time" placeholder="Date | Time" maxlength="12">
+              </div>
+          </div>
+          <!-- Hotel #3 -->
+          <div class="itineraryheader">
+            <input type="text" class="input headliner" placeholder="Hotel Name" maxlength="40">
+            <input type="text" class="input dates" placeholder="Location" maxlength="80">
+          </div>
+            <div class="travel">
+              <div class="airport departing">
+
+              <h4>CHECK-IN:</h4>
+              <input type="text" class="input2 time" placeholder="Date | Time" maxlength="12">
+              </div>
+              <div class= "airport">
+              <img src="hotelicon_white.png">
+              </div>
+              <div class="airport arriving">
+
+              <h4>CHECK-OUT:</h4>
+              <input type="text" class="input2 time" placeholder="Date | Time" maxlength="12">
+              </div>
+          </div>
+
+        </div>
+
+        <!-- //Third Column: Area for you to add your ACTIVITIES info after searching with google places API -->
+        <div class="col1 addActivities">
+          <h2 class="header">Activities</h2>
+
+          <div class="activitiesAdded">
+
+
+            <!-- Activity #1 -->
+            <div class="itineraryheader">
+              <input type="text" class="input headliner" placeholder="Activity, Attraction" maxlength="40">
+              <input type="text" class="input dates" placeholder="Type (e.g., Museum, Wedding)" maxlength="80">
+            </div>
+              <div class="travel">
+                <div class="left">
+
+                <h4>TIME:</h4>
+                <input type="text" class="input2 time2" placeholder="Hours" maxlength="8">
+                </div>
+                <div class= "airport">
+                <img src="activityicon_white.png">
+                </div>
+                <div class="right">
+
+                <textarea name="textarea" rows="2" cols="28" placeholder="NOTES: (e.g., entrance fee waived if you bring your passport!)"></textarea>
+                </div>
+            </div>
+
+            <!-- Activity #2 -->
+            <div class="itineraryheader">
+              <input type="text" class="input headliner" placeholder="Activity, Attraction" maxlength="40">
+              <input type="text" class="input dates" placeholder="Type (e.g., Museum, Wedding)" maxlength="80">
+            </div>
+              <div class="travel">
+                <div class="left">
+
+                <h4>TIME:</h4>
+                <input type="text" class="input2 time2" placeholder="Hours" maxlength="8">
+                </div>
+                <div class= "airport">
+                <img src="activityicon_white.png">
+                </div>
+                <div class="right">
+
+                <textarea name="textarea" rows="2" cols="28" placeholder="NOTES: (e.g., entrance fee waived if you bring your passport!)"></textarea>
+                </div>
+            </div>
+            <!-- Activity #3 -->
+            <div class="itineraryheader">
+              <input type="text" class="input headliner" placeholder="Activity, Attraction" maxlength="40">
+              <input type="text" class="input dates" placeholder="Type (e.g., Museum, Wedding)" maxlength="80">
+            </div>
+              <div class="travel">
+                <div class="left">
+
+                <h4>TIME:</h4>
+                <input type="text" class="input2 time2" placeholder="Hours" maxlength="8">
+                </div>
+                <div class= "airport">
+                <img src="activityicon_white.png">
+                </div>
+                <div class="right">
+
+                <textarea name="textarea" rows="2" cols="28" placeholder="NOTES: (e.g., entrance fee waived if you bring your passport!)"></textarea>
+                </div>
+            </div>
+        </div>
+        </div>
+      </div>
+    </div>
+    </section>
+    <section class="module pageThree">
+      <div class="header">
+        <div class="pagedividerarrow"></div>
+
+          <h2 class="headertext">Get Oriented:
+          </h2>
+      </div>
+          <div id="map">  </div>
+        <div class="placessearchsection">
+
+          <h3>I'm looking for:   </h3>
+          <input class="placessearch" type="text" placeholder="Places (to eat, to read, to shop...)"> <input type="submit" class="search" value="Search" id="form">
+        </div>
+    </section>
+      <!--  Insert Google Maps screenshot here with pins -->
+
+
+
+
+
+
+
+  <script type="text/javascript">
+
+
+    //setting the variable here, outside the initMap function, so the "setCenter" function on map below could retrieve the global map variable
+    var map;
+
+
+    //save the Submit button of the city to which the user is traveling as a variable
+    var button = document.querySelector("input.form");
+    var city;
+    var userSelectLat;
+    var userSelectLng;
+
+    //save the Search button of the place for which the user is looking as a variable
+    var search = document.querySelector("input.search");
+    var service;
+
+
+    //add an event listener which executes the callback function, geoLocation, when the Submit button is clicked
+    button.addEventListener("click", getLocation);
+    search.addEventListener("click", searchPlace);
+
+
+    //adds animation of scroll down to map when the user clicks the Submit button
+    $(document).ready(function (){
+            $("#form").click(function (){
+                $('html, body').animate({
+                    scrollTop: $("#map").offset().top
+                }, 800);
+            });
+        });
+
+
+        // new google.maps.places.Autocomplete(document.getElementById('autocomplete'));
+
+        var resultList = [];
+        var service = new google.maps.places.PlacesService(map);
+        var request = {
+          location: map.getCenter(),
+          radius: '5000',
+          query: <search string>
+};
+
+var overlays = [];
+
+function plotResultList(){
+    var iterator = 0;
+    for(var i = 0; i < resultList.length; i++){
+        setTimeout(function(){
+
+            var marker = new google.maps.Marker({
+                position: resultList[iterator].geometry.position,
+                map: map,
+                title: resultList[iterator].name,
+                animation: google.maps.Animation.DROP
+            });
+
+            overlays.push(marker);
+
+            iterator++;
+        }, i * 75);
+    }
+}
+
+service.textSearch(request, function(results, status, pagination){
+    if (status == google.maps.places.PlacesServiceStatus.OK) {
+        resultList = resultList.concat(results);
+        plotResultList();
+    }
+});
+
+//helper functions
+    function initMap() {
+      var myLatlng = {lat: 37.7751, lng: -122.4194};
+      map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 12,
+        center: myLatlng
+});
+}
+
+    function getLocation(event) {
+      event.preventDefault()
+      //store city entered into a variable, put it in quotes, and add that to the geocode URL
+      city = document.querySelector("input#destination.inputBox").value;
+      var cityInQuotes = "\"" + city + "\""
+      var geocodeURL = "https://maps.googleapis.com/maps/api/geocode/json?address="+cityInQuotes+"AIzaSyBMEriLb8zqxFSVBWArM6n3MxonN5d-cLY";
+      //return JSON and
+      $.get(geocodeURL,printCoordinates)
+      }
+
+      function printCoordinates(results) {
+
+        if (results.status === "ZERO_RESULTS") {
+          alert("Location not found. Try searching for a city or more specific location.")
+      } else {
+        userSelectLat = results.results[0].geometry.location.lat;
+        userSelectLng = results.results[0].geometry.location.lng;
+        console.log('arrayresults = '+userSelectLat,userSelectLng);
+        }
+        var relocate = new google.maps.LatLng(userSelectLat, userSelectLng);
+        map.setCenter(relocate);
+    }
+
+    function searchPlace() {
+      event.preventDefault();
+
+      var place = document.querySelector("input.placessearch").value;
+      var geoURL = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=" + place + "+" + "in" + "+" + city +"&key=AIzaSyC-m1tCw8sr4faPxPJmrD04t-PByxlUQDI"
+      console.log(geoURL);
+
+      if (city == undefined) {
+        alert("Enter a city name")
+      } else
+      $.get(geoURL, loadResults)
+    }
+
+    function loadResults(results, status) {
+      if (status == google.maps.places.PlacesServiceStatus.OK) {
+        for (var i = 0; i < results.length; i++) {
+          var place = results[i];
+          createMarker(results[i]);
+        }
+      }
+
+    }
+
+  </script>
+
+    <script async defer
+          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMEriLb8zqxFSVBWArM6n3MxonN5d-cLY&callback=initMap">
+    </script>
+  </body>
+</html>
