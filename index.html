@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title> Well Traveled: Travel Itinerary Creator </title>
+    <title> Your Personal Itinerary Planner </title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyC-m1tCw8sr4faPxPJmrD04t-PByxlUQDI"></script>
 
@@ -267,7 +267,7 @@
       div.placessearchsection h3 {
         display: inline-block;
       }
-      .placessearch {
+      #placessearch {
         display:inline-block;
         background: transparent;
         border: 1.5px solid black;
@@ -291,7 +291,7 @@
   <body>
     <section class="module pageOne">
       <div class="title">
-        <h1 class="maintitle"> Itinerary Planner</h1>
+        <h1 class="maintitle"> Plan your trip </h1>
         <div class="row">
           <h3>I'm traveling to: </h3>
           <input class="inputBox" type="text" name="destination" id="destination" placeholder="City (e.g., Barcelona or Guangzhou)" maxlength="35">
@@ -517,7 +517,7 @@
         <div class="placessearchsection">
 
           <h3>I'm looking for:   </h3>
-          <input class="placessearch" type="text" placeholder="Places (to eat, to read, to shop...)"> <input type="submit" class="search" value="Search" id="form">
+          <input id="placessearch" type="text" placeholder="Places (to eat, to read, to shop...)"> <input type="submit" class="search" value="Search">
         </div>
     </section>
 
@@ -532,9 +532,9 @@
 
     //setting map variables outside the initMap function to allow for callback functions to retrieve variables in global scope
     var map;
-    var service;
+    var marker;
     var infowindow;
-    var gmarkers = [];
+
 
     //save the Submit button, the city entered, and its coordinates as global variables
     var button = document.querySelector("input.form");
@@ -542,16 +542,28 @@
     var userSelectLat;
     var userSelectLng;
 
+
+
+
+
     //save the Search button of the place for which the user is looking as a variable
     var search = document.querySelector("input.search");
-    var place;
-    //add an event listener which re-centers the map based on the city the user enters and submits.  also sets location bias for the places search below.
-    button.addEventListener("click", getLocation);
-
     // add an event listener which searches for the place/activity the user selects via the Google Places API and plots these results on the map based on the city name s/he entered at top of page.
     search.addEventListener("click", searchPlace);
 
 
+    //add an event listener which re-centers the map based on the city the user enters and submits.  also sets location bias for the places search below.
+    button.addEventListener("click", getLocation);
+
+  // initiates map and sets location to San Francisco
+    function initMap() {
+      var myLatlng = {lat: 37.7751, lng: -122.4194};
+      map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 15,
+        center: myLatlng
+      });
+      infowindow = new google.maps.InfoWindow();
+    }
 
     //adds animation of scroll down to map when the user clicks the Submit button
     $(document).ready(function (){
@@ -564,26 +576,16 @@
 
 //helper functions
 
-  // initiates map and sets location to San Francisco
-    function initMap() {
-      var myLatlng = {lat: 37.7751, lng: -122.4194};
-      map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 15,
-        center: myLatlng
-});
-      infowindow = new google.maps.InfoWindow();
-}
-
-  // Uses Google Maps Geocode API to request a JSON response for a query on the city entered by the user
-    function getLocation(event) {
-      event.preventDefault()
-      //store city entered into a variable, put it in quotes, and add that to the geocode URL
-      city = document.querySelector("input#destination.inputBox").value;
-      var cityInQuotes = "\"" + city + "\""
-      var geocodeURL = "https://maps.googleapis.com/maps/api/geocode/json?address="+cityInQuotes+"AIzaSyBMEriLb8zqxFSVBWArM6n3MxonN5d-cLY";
-      //return JSON and
-      $.get(geocodeURL,printCoordinates)
-      }
+    // Uses Google Maps Geocode API to request a JSON response for a query on the city entered by the user
+      function getLocation(event) {
+        event.preventDefault()
+        //store city entered into a variable, put it in quotes, and add that to the geocode URL
+        city = document.querySelector("input#destination.inputBox").value;
+        var cityInQuotes = "\"" + city + "\""
+        var geocodeURL = "https://maps.googleapis.com/maps/api/geocode/json?address="+cityInQuotes+"AIzaSyBMEriLb8zqxFSVBWArM6n3MxonN5d-cLY";
+        //return JSON and
+        $.get(geocodeURL,printCoordinates)
+        }
 
     // Saves the coordinates as global variables and re-centers the map based on the new coordinates
       function printCoordinates(results) {
@@ -593,52 +595,66 @@
       } else {
         userSelectLat = results.results[0].geometry.location.lat;
         userSelectLng = results.results[0].geometry.location.lng;
-        console.log('arrayresults = '+userSelectLat,userSelectLng);  //testing purposes
         }
         var relocate = new google.maps.LatLng(userSelectLat, userSelectLng);
         map.setCenter(relocate);
     }
 
+      var gmarkers = [];
+      var place;
+
     // Searches the type of activity or point of interest using Google Places library (Google Maps Javascript API) and plots results on the map
     function searchPlace(event) {
       event.preventDefault();
-      place = document.querySelector("input.placessearch").value;
-      var service = new google.maps.places.PlacesService(map);
-      service.nearbySearch({
-        location: {lat: userSelectLat, lng: userSelectLng},
-        radius: 2000,
-        types: [place]
-      }, plotResults);
 
-
-      // if (city == undefined) {
-      //   alert("Enter a city name")
-      // } else
-      // $.get(geoURL, loadResults)
-    }
-
-    // Loops through each of the results in the nearbysearch, passing each through the createmarker function
-    function plotResults(results, status) {
-      if (status === google.maps.places.PlacesServiceStatus.OK) {
-        for (var i = 0; i < results.length; i++) {
-          createMarker(results[i]);
-        }
+      if (city == "") {
+        alert("Enter the name of the city to which you're traveling above")
+      } else {
+        place = document.querySelector("#placessearch").value;
+        var service = new google.maps.places.PlacesService(map);
+        service.nearbySearch({
+          location: {lat: userSelectLat, lng: userSelectLng},
+          radius: 2000,
+          keyword: [place],
+          types: [place],
+          rankby: google.maps.places.RankBy.PROMINENCE
+        }, plotResults);
       }
     }
+
     // For each of the results of the nearbysearch, plots a marker, which if clicked on, displays a window showing the place name, address, and rating.
     function createMarker(placefound) {
       var placeLoc = placefound.geometry.location;
-      var marker = new google.maps.Marker({
+      marker = new google.maps.Marker({
         map: map,
-        position: placefound.geometry.location
+        animation: google.maps.Animation.DROP,
+        position: placeLoc
       });
+      marker.setMap(map);
+      gmarkers.push(marker);
       google.maps.event.addListener(marker, 'click', function() {
 
         infowindow.setContent(' <div class="placeName"><h3>' + placefound.name + '</h3><br>' + placefound.vicinity +
         '<br> <strong>Rating: ' + placefound.rating + '</strong></div>')
         infowindow.open(map, this);
       })
+
     };
+
+
+    // Loops through each of the results in the nearbysearch. Clear any markers already on the map and remove them from the marker array.  Then pass new results through createMarker function.
+    function plotResults(results, status) {
+      if (status === google.maps.places.PlacesServiceStatus.OK) {
+
+        for (var i = 0; i < gmarkers.length; i++) {
+          gmarkers[i].setMap(null);
+        }
+        gmarkers = [];
+        for (var i = 0; i < results.length; i++) {
+          createMarker(results[i]);
+        }
+    }
+  };
 
 
 
