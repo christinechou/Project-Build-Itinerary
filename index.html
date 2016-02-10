@@ -279,6 +279,12 @@
         font-weight: 40px;
         color: black;
       }
+      .placeName {
+        color: black;
+      }
+      .placeName h3 {
+        padding: 0 !important;
+      }
 
     </style>
   </head>
@@ -524,11 +530,13 @@
   <script type="text/javascript">
 
 
-    //setting the variable here, outside the initMap function, so the "setCenter" function on map below could retrieve the global map variable
+    //setting map variables outside the initMap function to allow for callback functions to retrieve variables in global scope
     var map;
+    var service;
+    var infowindow;
+    var gmarkers;
 
-
-    //save the Submit button of the city to which the user is traveling as a variable
+    //save the Submit button, the city entered, and its coordinates as global variables
     var button = document.querySelector("input.form");
     var city;
     var userSelectLat;
@@ -536,12 +544,14 @@
 
     //save the Search button of the place for which the user is looking as a variable
     var search = document.querySelector("input.search");
-    var service;
-
-
-    //add an event listener which executes the callback function, geoLocation, when the Submit button is clicked
+    var place;
+    //add an event listener which re-centers the map based on the city the user enters and submits.  also sets location bias for the places search below.
     button.addEventListener("click", getLocation);
+
+    // add an event listener which searches for the place/activity the user selects via the Google Places API and plots these results on the map based on the city name s/he entered at top of page.
+    search.addEventListener("click", deleteMarkers)
     search.addEventListener("click", searchPlace);
+
 
 
     //adds animation of scroll down to map when the user clicks the Submit button
@@ -553,52 +563,14 @@
             });
         });
 
-
-        // new google.maps.places.Autocomplete(document.getElementById('autocomplete'));
-
-//         var resultList = [];
-//         var service = new google.maps.places.PlacesService(map);
-//         var request = {
-//           location: map.getCenter(),
-//           radius: '5000',
-//           query: <search string>
-// };
-
-// var overlays = [];
-//
-// function plotResultList(){
-//     var iterator = 0;
-//     for(var i = 0; i < resultList.length; i++){
-//         setTimeout(function(){
-//
-//             var marker = new google.maps.Marker({
-//                 position: resultList[iterator].geometry.position,
-//                 map: map,
-//                 title: resultList[iterator].name,
-//                 animation: google.maps.Animation.DROP
-//             });
-//
-//             overlays.push(marker);
-//
-//             iterator++;
-//         }, i * 75);
-//     }
-// }
-
-// service.textSearch(request, function(results, status, pagination){
-//     if (status == google.maps.places.PlacesServiceStatus.OK) {
-//         resultList = resultList.concat(results);
-//         plotResultList();
-//     }
-// });
-
 //helper functions
     function initMap() {
       var myLatlng = {lat: 37.7751, lng: -122.4194};
       map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 12,
+        zoom: 15,
         center: myLatlng
 });
+      infowindow = new google.maps.InfoWindow();
 }
 
     function getLocation(event) {
@@ -623,34 +595,70 @@
         var relocate = new google.maps.LatLng(userSelectLat, userSelectLng);
         map.setCenter(relocate);
     }
-
-    function searchPlace() {
-      event.preventDefault();
-
-      var place = document.querySelector("input.placessearch").value;
-      var geoURL = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=" + place + "+" + "in" + "+" + city +"&key=AIzaSyC-m1tCw8sr4faPxPJmrD04t-PByxlUQDI"
-      console.log(geoURL);
-
-      if (city == undefined) {
-        alert("Enter a city name")
-      } else
-      $.get(geoURL, loadResults)
+    //removes markers from map but keeps them in array
+    function clearMarkers() {
+        for (var i = 0; i < gmarkers.length; i++) {
+          gmarkers[i].setMap(null);
+        }
+      }
+    };
+    //deletes markers currently on the map
+    function deleteMarkers() {
+      clearMarkers();
+      gmarkers = [];
     }
 
-    function loadResults(results, status) {
-      if (status == google.maps.places.PlacesServiceStatus.OK) {
+    function searchPlace(event) {
+      event.preventDefault();
+      place = document.querySelector("input.placessearch").value;
+      //begin search and plot results
+      var service = new google.maps.places.PlacesService(map);
+      service.nearbySearch({
+        location: {lat: userSelectLat, lng: userSelectLng},
+        radius: 2000,
+        types: [place]
+      }, plotResults);
+
+
+      // if (city == undefined) {
+      //   alert("Enter a city name")
+      // } else
+      // $.get(geoURL, loadResults)
+    }
+
+
+    function plotResults(results, status) {
+      if (status === google.maps.places.PlacesServiceStatus.OK) {
         for (var i = 0; i < results.length; i++) {
-          var place = results[i];
           createMarker(results[i]);
         }
       }
-
     }
+
+    function createMarker(placefound) {
+      var placeLoc = placefound.geometry.location;
+      var marker = new google.maps.Marker({
+        map: map,
+        position: placefound.geometry.location
+      });
+      //push newly created marker into array:
+      gmarkers.push(marker);
+
+      google.maps.event.addListener(marker, 'click', function() {
+
+        infowindow.setContent(' <div class="placeName"><h3>' + placefound.name + '</h3><br>' + placefound.vicinity +
+        '<br> <strong>Rating: ' + placefound.rating + '</strong></div>')
+        infowindow.open(map, this);
+      })
+    };
+
+
 
   </script>
 
     <script async defer
-          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMEriLb8zqxFSVBWArM6n3MxonN5d-cLY&callback=initMap">
+          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMEriLb8zqxFSVBWArM6n3MxonN5d-cLY&signed_in=true&libraries=places&callback=initMap">
     </script>
+
   </body>
 </html>
