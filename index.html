@@ -534,7 +534,7 @@
     var map;
     var service;
     var infowindow;
-    var gmarkers;
+    var gmarkers = [];
 
     //save the Submit button, the city entered, and its coordinates as global variables
     var button = document.querySelector("input.form");
@@ -549,7 +549,6 @@
     button.addEventListener("click", getLocation);
 
     // add an event listener which searches for the place/activity the user selects via the Google Places API and plots these results on the map based on the city name s/he entered at top of page.
-    search.addEventListener("click", deleteMarkers)
     search.addEventListener("click", searchPlace);
 
 
@@ -564,6 +563,8 @@
         });
 
 //helper functions
+
+  // initiates map and sets location to San Francisco
     function initMap() {
       var myLatlng = {lat: 37.7751, lng: -122.4194};
       map = new google.maps.Map(document.getElementById('map'), {
@@ -573,6 +574,7 @@
       infowindow = new google.maps.InfoWindow();
 }
 
+  // Uses Google Maps Geocode API to request a JSON response for a query on the city entered by the user
     function getLocation(event) {
       event.preventDefault()
       //store city entered into a variable, put it in quotes, and add that to the geocode URL
@@ -583,6 +585,7 @@
       $.get(geocodeURL,printCoordinates)
       }
 
+    // Saves the coordinates as global variables and re-centers the map based on the new coordinates
       function printCoordinates(results) {
 
         if (results.status === "ZERO_RESULTS") {
@@ -590,28 +593,16 @@
       } else {
         userSelectLat = results.results[0].geometry.location.lat;
         userSelectLng = results.results[0].geometry.location.lng;
-        console.log('arrayresults = '+userSelectLat,userSelectLng);
+        console.log('arrayresults = '+userSelectLat,userSelectLng);  //testing purposes
         }
         var relocate = new google.maps.LatLng(userSelectLat, userSelectLng);
         map.setCenter(relocate);
     }
-    //removes markers from map but keeps them in array
-    function clearMarkers() {
-        for (var i = 0; i < gmarkers.length; i++) {
-          gmarkers[i].setMap(null);
-        }
-      }
-    };
-    //deletes markers currently on the map
-    function deleteMarkers() {
-      clearMarkers();
-      gmarkers = [];
-    }
 
+    // Searches the type of activity or point of interest using Google Places library (Google Maps Javascript API) and plots results on the map
     function searchPlace(event) {
       event.preventDefault();
       place = document.querySelector("input.placessearch").value;
-      //begin search and plot results
       var service = new google.maps.places.PlacesService(map);
       service.nearbySearch({
         location: {lat: userSelectLat, lng: userSelectLng},
@@ -626,7 +617,7 @@
       // $.get(geoURL, loadResults)
     }
 
-
+    // Loops through each of the results in the nearbysearch, passing each through the createmarker function
     function plotResults(results, status) {
       if (status === google.maps.places.PlacesServiceStatus.OK) {
         for (var i = 0; i < results.length; i++) {
@@ -634,16 +625,13 @@
         }
       }
     }
-
+    // For each of the results of the nearbysearch, plots a marker, which if clicked on, displays a window showing the place name, address, and rating.
     function createMarker(placefound) {
       var placeLoc = placefound.geometry.location;
       var marker = new google.maps.Marker({
         map: map,
         position: placefound.geometry.location
       });
-      //push newly created marker into array:
-      gmarkers.push(marker);
-
       google.maps.event.addListener(marker, 'click', function() {
 
         infowindow.setContent(' <div class="placeName"><h3>' + placefound.name + '</h3><br>' + placefound.vicinity +
