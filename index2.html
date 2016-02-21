@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title> Your Personal Itinerary Planner </title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyC-m1tCw8sr4faPxPJmrD04t-PByxlUQDI"></script>
+
+
+    <!-- Fonts -->
+    <link href="http://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Raleway&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+
+
+    <style>
+      /*Google map setup*/
+      html, body {
+        height: 100%; margin: 0; padding: 0;
+      }
+      #map {
+        width: 100%;
+        min-height: 400px;
+      }
+      body {
+        font-family: 'Raleway',sans-serif;
+        color:white;
+        size: 26px;
+      }
+      h1 {
+        font-family: "Poiret One";
+        text-transform: uppercase;
+        font-size: 3em;
+        color: black;
+      }
+      h2 {
+        text-align: center;
+        font-family: "Poiret One";
+        font-size: 2em;
+        color: #dbf0ff;
+      }
+      section.module {
+        height:700px;
+        background-position: 50% 50%;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+        margin-left: 0px;
+        margin-right:0px;
+      }
+      /*Page One*/
+      section.pageOne{
+        background-image: url(bergen.jpg);
+        margin-top:-10px;
+      }
+      .maintitle {
+        margin-top: 200px;
+      }
+      .title {
+        text-align: center;
+        padding-top: 30px;
+        margin: 10px auto;
+      }
+      .row {
+        text-align: center;
+      }
+      h3 {
+        color: black;
+        font-family: "Poiret One";
+        padding-left:10px;
+        margin: 0 auto;
+      }
+      label {
+        display: block;
+        width: 130px;
+      }
+      .inputBox {
+        display:block;
+        background: transparent;
+        border: 1.5px solid black;
+        width: 320px;
+        margin: 10px auto;
+        padding: 5px;
+        font-family: 'Raleway';
+        font-size: 1.5em;
+        font-weight: 400px;
+        color: black;
+      }
+      #form, input.search {
+        font-family: 'Raleway';
+        text-transform: uppercase;
+        font-size: 15px;
+        padding: 5px;
+        display: block;
+        background: transparent;
+        border: 1.5px solid black;
+        text-align: center;
+        margin: 10px auto;
+      }
+      input.search {
+        display: inline-block !important;
+      }
+      /*Page Two*/
+      section.pageTwo{
+        height:680px !important;
+        background-color: #E1E8ED;
+      }
+      .container-fluid {
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .itineraryheader {
+        text-align: center;
+        margin: 0 auto;
+        width:100%;
+        background: rgba(255,255,255,0.1);
+      }
+      input.input {
+        font-family: 'Raleway';
+        font-size: 12px;
+        color: white;
+        text-align: center;
+        margin: 0px auto;
+        background: transparent;
+        border: 0px;
+        width: 200px;
+        padding:5px;
+        font-weight: 400px;
+        margin-top: 3px;
+      }
+      input.headliner {
+        font-size: 18px;
+        width: 250px;
+        display: block;
+      }
+      div.airport{
+        display: inline-block;
+        padding: 10px;
+        height: 35px;
+      }
+      div.travel {
+        background: rgba(255,255,255,0.1);
+        padding-bottom: 20px;
+        height: 70px
+      }
+      input.input2 {
+        font-family: 'Raleway';
+        font-size: 12px;
+        color: white;
+        text-align: center;
+        margin: 0px auto;
+        background: transparent;
+        border: 0px;
+        padding:2px;
+        font-weight: 400px;
+        margin-top: 0px;
+
+      }
+      input.input2.headliner {
+        text-transform: uppercase;
+        color: pink;
+        width:55px;
+      }
+      h4 {
+        font-size: 12px;
+        padding: 2px;
+        margin: 0 auto;
+      }
+      textarea {
+        font-family: 'Raleway';
+        font-size: 11px;
+        color: white;
+        margin: 0px auto;
+        background: transparent;
+        border: 0px;
+        padding-left:5px;
+        padding-right: 5px;
+        font-weight: 400px;
+        margin: 0 auto;
+        display:inline-block;
+      }
+      /*Page Two*/
+
+      .headertext {
+        color: black !important;
+        text-align: left !important;
+        margin: 0 0 0 20px;
+      }
+      div.header {
+        border-top: 5px solid black;
+      }
+      .pagedividerarrow {
+        width: 0;
+        height: 0;
+        border-left: 40px solid transparent;
+        border-right: 40px solid transparent;
+        border-top: 40px solid black;
+        margin-left: 80%;
+      }
+      div.placessearchsection h3 {
+        display: inline-block;
+      }
+      #placessearch {
+        display:inline-block;
+        background: transparent;
+        border: 1.5px solid black;
+        width: 320px;
+        margin: 15px auto;
+        padding: 5px;
+        font-family: 'Raleway';
+        font-size: 1em;
+        font-weight: 40px;
+        color: black;
+      }
+      #windowContent {
+        color: black;
+      }
+      #placeName h3 {
+        padding: 0 !important;
+      }
+      .iw-table-row {
+        height:18px;
+      }
+      .iw-attribute-name {
+        font-weight: bold;
+        text-align: right;
+      }
+      .iw-picture {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <section class="module pageOne">
+      <div class="title">
+        <h1 class="maintitle"> Plan your trip </h1>
+        <div class="row">
+          <h3>I'm traveling to: </h3>
+          <input class="inputBox" type="text" name="destination" id="destination" placeholder="City (e.g., Barcelona or Guangzhou)" maxlength="35">
+          <input type="submit" class="form" id="form">
+        </div>
+
+      </div>
+    </section>
+
+
+    </section>
+    <section class="module pageTwo">
+      <div class="header">
+        <div class="pagedividerarrow"></div>
+
+          <h2 class="headertext">Get Oriented:
+          </h2>
+
+        <input type="submit" class="searchHotel" value="Search Hotels">
+
+  <div style="display: none">
+      <div id="windowContent">
+        <table>
+          <tr id="iw-placeName" class = "iw-table-row">
+            <th colspan="2" id="iw-placeName-content" ></th>
+          </tr>
+          <tr id="iw-picture" id="iw-table-row">
+            <th colspan="2" id="iw-picture-content"> </th>
+          </tr>
+          <tr id="iw-address" class="iw-table-row">
+            <td class="iw-attribute-name">  Address:  </td>
+            <td id="iw-address-content">            </td>
+          </tr>
+          <tr id="iw-phone" class="iw-table-row">
+            <td class="iw-attribute-name">  Phone Number:  </td>
+            <td id="iw-phone-content">            </td>
+          </tr>
+          <tr id="iw-rating" class="iw-table-row">
+            <td class="iw-attribute-name">  Rating:  </td>
+            <td id="iw-rating-content">            </td>
+          </tr>
+        </table>
+      </div>
+  </div>
+
+<!-- infowindow content that above html is building out
+  infowindow.setContent('<div class="iw-placeName"><h3>' + placefound.name + '</h3><br>' +
+div: iw-address // -name (Address:) and -content (fill)
+  placefound.vicinity +
+div: iw-rating // -name (Rating:) and -content (fill)
+  '<br> <strong>Rating: ' + placefound.rating + '</strong></div>')
+  infowindow.open(map, this); -->
+
+
+      </div>
+          <div id="map">  </div>
+        <div class="placessearchsection">
+
+          <h3>I'm looking for:   </h3>
+          <input id="placessearch" type="text" placeholder="Search places here (e.g., food, museums, temples, bars)"> <input type="submit" class="search" value="Search">
+        </div>
+    </section>
+
+
+    <section class="module pageThree">
+      <div class="Day1">
+
+      </div>
+
+    </section>
+
+
+  <script type="text/javascript">
+  //setting map variables outside the initMap function to allow for callback functions to retrieve variables in global scope
+  var map;
+  var marker;
+  var infowindow;
+  var places;
+
+  var markers = [];
+  var findPlace;
+
+  //save the Submit button, the city entered, and its coordinates as global variables
+  var button = document.querySelector("input.form");
+  var city;
+  var userSelectLat;
+  var userSelectLng;
+
+  //add an event listener which re-centers the map based on the city the user enters and submits.  also sets location bias for the places search below.
+  button.addEventListener("click", getLocation);
+
+  //save the search hotels button as a global variable
+  var searchHotelButton = document.querySelector("input.searchHotel");
+  searchHotelButton.addEventListener("click", searchHotel)
+
+  //save the Search button of the place for which the user is looking as a variable
+  var search = document.querySelector("input.search");
+  // add an event listener which searches for the place/activity the user selects via the Google Places API and plots these results on the map based on the city name s/he entered at top of page.
+  search.addEventListener("click", searchOther);
+
+  // initiates map and sets location to San Francisco
+  function initMap() {
+    var myLatlng = {lat: 37.7751, lng: -122.4194};
+    map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 15,
+      center: myLatlng
+    });
+    infowindow = new google.maps.InfoWindow({
+      content: document.getElementById("windowContent")
+    });
+  }
+  //adds animation of scroll down to map when the user clicks the Submit button
+  $(document).ready(function (){
+          $("#form").click(function (){
+              $('html, body').animate({
+                  scrollTop: $("#map").offset().top
+              }, 800);
+          });
+      });
+
+//helper functions
+  // Uses Google Maps Geocode API to request a JSON response for a query on the city entered by the user
+  function getLocation(event) {
+    event.preventDefault()
+    //store city entered into a variable, put it in quotes, and add that to the geocode URL
+    city = document.querySelector("input#destination.inputBox").value;
+    city = "Noe Valley, ca";
+    var cityInQuotes = "\"" + city + "\""
+    var geocodeURL = "https://maps.googleapis.com/maps/api/geocode/json?address="+cityInQuotes+"AIzaSyBMEriLb8zqxFSVBWArM6n3MxonN5d-cLY";
+    //return JSON and get re-center map based on location input by user
+    $.get(geocodeURL,printCoordinates)
+  }
+
+  // Saves the coordinates as global variables and re-centers the map based on the new coordinates
+  // Use Google Geocide API to retrieve coordinates for loctaion which user has entered
+  function printCoordinates(results) {
+    if (results.status === "ZERO_RESULTS") {
+      alert("Hmm, that location couldn't be found. Try searching for a city or more specific location.")
+    } else {
+      userSelectLat = results.results[0].geometry.location.lat;
+      userSelectLng = results.results[0].geometry.location.lng;
+      console.log(userSelectLat + ", " + userSelectLng);
+      }
+    var relocate = new google.maps.LatLng(userSelectLat, userSelectLng);
+    map.setCenter(relocate);
+  }
+
+
+
+  function searchHotel(){
+    searchPlace(event,"hotel");
+  }
+
+  function searchOther() {
+    userSearch = document.querySelector("#placessearch").value;
+    searchPlace(event,userSearch)
+  }
+
+    // Searches the type of place using Google Places library (Google Maps Javascript API) and plots results on the map
+    function searchPlace(event, searchresult) {
+      event.preventDefault();
+      if (city == undefined) {
+        alert("Enter the name of the city to which you're traveling above")
+      } else {
+        places = new google.maps.places.PlacesService(map);
+
+    places.nearbySearch({
+      location: {lat: userSelectLat, lng: userSelectLng},
+      radius: 2000,
+      keyword: [searchresult],
+      types: [searchresult],
+      // rankby: google.maps.places.RankBy.PROMINENCE
+    }, function(results, status) {
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+          clearMarkers();
+      // Loops through each of the results in the nearbysearch. Clear any markers already on the map and remove them from the marker array.  Then pass new results through createMarker function.
+
+        for (var i = 0; i < results.length; i++) {
+          var placeLoc = results[i].geometry.location
+          markers[i] = new google.maps.Marker({
+            position: placeLoc,
+            animation: google.maps.Animation.DROP,
+            placeResult: results[i]
+         });
+          google.maps.event.addListener(markers[i],'click', showInfoWindow);
+          setTimeout(dropMarker(i), i*20);
+
+        }
+        }
+      });
+      }
+    }
+
+    function clearMarkers() {
+      for (var i = 0; i < markers.length; i++) {
+        if (markers[i]) {
+          markers[i].setMap(null);
+        }
+      }
+      markers = []
+    }
+
+    function dropMarker(i) {
+      return function() {
+        markers[i].setMap(map);
+      };
+    }
+
+
+
+  // For each of the results of the nearbysearch, plots a marker, which if clicked on, displays a window showing the place name, address, and rating.
+
+  function showInfoWindow() {
+    var marker = this;
+
+    places.getDetails({ placeId: marker.placeResult.place_id}, function(place, status) {
+      if (status !== google.maps.places.PlacesServiceStatus.OK) {
+        return;
+      }
+      infowindow.open(map,marker);
+      buildInfoWindowContent(place);
+    });
+  }
+
+
+  function buildInfoWindowContent(place) {
+    document.getElementById('iw-placeName-content').innerHTML = '<b><h3><a href="' + place.website + '">' + place.name + '</a></h3></b>';
+
+    if (place.photos[0].getUrl({maxWidth:300}) !== undefined) {
+      document.getElementById('iw-picture').style.display = '';
+      document.getElementById('iw-picture-content').innerHTML = '<img src="' + place.photos[0].getUrl({ maxWidth:300, maxHeight: 150}) + '"/>';
+    } else {
+      document.getElementById('iw-picture').style.display = 'none';
+    }
+    document.getElementById('iw-address-content').textContent = place.vicinity;
+
+    if (place.formatted_phone_number) {
+    document.getElementById('iw-phone').style.display = '';
+    document.getElementById('iw-phone-content').textContent =
+        place.formatted_phone_number;
+    } else {
+      document.getElementById('iw-phone').style.display = 'none';
+    }
+console.log(place.rating)
+    if (place.rating) {
+      var ratingHtml = '';
+      for (var i = 0; i < 5; i++) {
+        if (place.rating > (i+0.5)) {
+          ratingHtml += '&#10003;';
+        }
+      document.getElementById('iw-rating').style.display = '';
+      document.getElementById('iw-rating-content').innerHTML = ratingHtml + " (" + place.rating + "/5)";
+      }
+    } else {
+        document.getElementById('iw-rating').style.display = 'none';
+      }
+    }
+
+
+  </script>
+
+    <script async defer
+          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMEriLb8zqxFSVBWArM6n3MxonN5d-cLY&signed_in=true&libraries=places&callback=initMap">
+    </script>
+
+  </body>
+</html>
