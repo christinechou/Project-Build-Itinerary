@@ -361,7 +361,6 @@ div: iw-rating // -name (Rating:) and -content (fill)
     event.preventDefault()
     //store city entered into a variable, put it in quotes, and add that to the geocode URL
     city = document.querySelector("input#destination.inputBox").value;
-    city = "Noe Valley, ca";
     var cityInQuotes = "\"" + city + "\""
     var geocodeURL = "https://maps.googleapis.com/maps/api/geocode/json?address="+cityInQuotes+"AIzaSyBMEriLb8zqxFSVBWArM6n3MxonN5d-cLY";
     //return JSON and get re-center map based on location input by user
