@@ -20,12 +20,19 @@
       }
       #map {
         width: 100%;
-        min-height: 400px;
+        min-height: 420px;
       }
       body {
         font-family: 'Raleway',sans-serif;
         color:white;
         size: 26px;
+      }
+      main {
+        margin: 1.5em auto;
+        background: rgba(255,255,255,0.8);
+        box-shadow: 4px 4px 10px 0 rgba(0, 0, 0, 0.2);
+        padding: 2em 3em;
+        max-width: 600px;
       }
       h1 {
         font-family: "Poiret One";
@@ -37,7 +44,8 @@
         text-align: center;
         font-family: "Poiret One";
         font-size: 2em;
-        color: #dbf0ff;
+        color:black;
+        /*color: #dbf0ff;*/
       }
       section.module {
         height:700px;
@@ -51,7 +59,8 @@
       /*Page One*/
       section.pageOne{
         background-image: url(bergen.jpg);
-        margin-top:-10px;
+        margin-top:-15px;
+        height:720px;
       }
       .maintitle {
         margin-top: 200px;
@@ -68,125 +77,67 @@
         color: black;
         font-family: "Poiret One";
         padding-left:10px;
+        padding-right:10px;
         margin: 0 auto;
       }
-      label {
-        display: block;
-        width: 130px;
-      }
-      .inputBox {
-        display:block;
+      .inputBox, .form-content  {
         background: transparent;
         border: 1.5px solid black;
-        width: 320px;
-        margin: 10px auto;
-        padding: 5px;
+        width: 240px;
+        margin: 4px auto;
+        padding: 3px;
         font-family: 'Raleway';
-        font-size: 1.5em;
-        font-weight: 400px;
+        font-size: 15px;
+        height: 18px;
         color: black;
       }
-      #form, input.search {
+      .form-content.arriving, .form-content.departing {
+        font-size: 12px;
+        height: 15px;
+      }
+
+      #form, input.search, input.searchHotel, input.searchRestaurants, input.searchMuseums, .load-itinerary {
         font-family: 'Raleway';
         text-transform: uppercase;
         font-size: 15px;
-        padding: 5px;
+        padding: 5.5px;
         display: block;
         background: transparent;
         border: 1.5px solid black;
         text-align: center;
         margin: 10px auto;
       }
-      input.search {
+      input.search, input.searchHotel, input.searchRestaurants, input.searchMuseums, .load-itinerary {
         display: inline-block !important;
+        margin: 0 auto;
+        font-size: 13px;
       }
       /*Page Two*/
       section.pageTwo{
-        height:680px !important;
-        background-color: #E1E8ED;
+        height:760px !important;
+        background-color: #f0f0f0;
       }
-      .container-fluid {
-        text-align: center;
-        margin-left: auto;
-        margin-right: auto;
-      }
-      .itineraryheader {
-        text-align: center;
+      .form-travel {
+        text-align: left;
         margin: 0 auto;
-        width:100%;
-        background: rgba(255,255,255,0.1);
-      }
-      input.input {
-        font-family: 'Raleway';
-        font-size: 12px;
-        color: white;
-        text-align: center;
-        margin: 0px auto;
-        background: transparent;
-        border: 0px;
-        width: 200px;
-        padding:5px;
-        font-weight: 400px;
-        margin-top: 3px;
-      }
-      input.headliner {
-        font-size: 18px;
-        width: 250px;
-        display: block;
-      }
-      div.airport{
-        display: inline-block;
-        padding: 10px;
-        height: 35px;
-      }
-      div.travel {
-        background: rgba(255,255,255,0.1);
-        padding-bottom: 20px;
-        height: 70px
-      }
-      input.input2 {
-        font-family: 'Raleway';
-        font-size: 12px;
-        color: white;
-        text-align: center;
-        margin: 0px auto;
-        background: transparent;
-        border: 0px;
-        padding:2px;
-        font-weight: 400px;
-        margin-top: 0px;
 
       }
-      input.input2.headliner {
-        text-transform: uppercase;
-        color: pink;
-        width:55px;
-      }
-      h4 {
-        font-size: 12px;
-        padding: 2px;
-        margin: 0 auto;
-      }
-      textarea {
-        font-family: 'Raleway';
-        font-size: 11px;
-        color: white;
-        margin: 0px auto;
-        background: transparent;
-        border: 0px;
-        padding-left:5px;
-        padding-right: 5px;
-        font-weight: 400px;
-        margin: 0 auto;
-        display:inline-block;
-      }
-      /*Page Two*/
-
       .headertext {
         color: black !important;
         text-align: left !important;
         margin: 0 0 0 20px;
       }
+      p {
+        color:black;
+        margin-left: 40px;
+        margin-right: 40px;
+        font-size: 14px;
+      }
+      .center {
+        text-align: center;
+        padding-bottom: 20px;
+      }
+
       div.header {
         border-top: 5px solid black;
       }
@@ -209,10 +160,10 @@
         margin: 15px auto;
         padding: 5px;
         font-family: 'Raleway';
-        font-size: 1em;
-        font-weight: 40px;
+        font-size: 14px;
         color: black;
       }
+
       #windowContent {
         color: black;
       }
@@ -229,6 +180,104 @@
       .iw-picture {
         text-align: center;
       }
+      #iw-itinerary {
+        font-family: 'Poiret One';
+      }
+      #iw-itinerary-button, .individual-date {
+        text-transform: uppercase;
+        font-family: "Poiret One";
+        padding-right: 10px;
+        margin: 0 auto;
+        background: transparent;
+        border: 0px;
+        text-align: center;
+        transition: all 0.3s ease;
+        transition-property: all;
+        transition-duration: 0.3s;
+        transition-timing-function: ease;
+        transition-delay: initial;
+      }
+      #iw-itinerary-button:hover, .individual-date:hover {
+        color: #a3c2c2;
+      }
+
+      /*Page Three*/
+      section.pageThree{
+        background-image: url(bergen.jpg);
+        height:1400px;
+      }
+
+      #itinerary-header {
+        text-align: center;
+        padding-top: 40px;
+      }
+      #itinerary-header h2 {
+        display:inline-block;
+      }
+
+      .itinerary-body {
+        text-align: center;
+      }
+      #sort-by-date {
+        margin-bottom: 15px;
+        margin-top:10px;
+      }
+      .individual-date {
+        font-size: 13px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+      }
+      .individual-date:not(:last-child) {
+        border-right: 1px solid black
+      }
+
+      .pageThree h1 {
+        display: inline-block;
+        padding-left: 10px;
+        padding-right: 10px;
+        font-size: 2.5em;
+      }
+      .pageThree h3 {
+        margin: 10px;
+        padding: 5px;
+        border-bottom: 1px solid #202060;
+      }
+      #activity-container {
+        overflow: auto;
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+      #activity-container:not(:last-child) {
+        margin-bottom: 1em;
+        padding-bottom: 1em;
+        border-bottom: 1px solid #d8d8da;
+      }
+
+      .activity-name {
+        font-size: 1em;
+        font-weight: bold;
+        margin-bottom: .5em;
+        color: #384047;
+      }
+
+      .pageThree img {
+        float: left;
+        width: 100px;
+        margin-right: 20px;
+      }
+
+      h4 {
+        font-size: 16px;
+        color: #4f5963;
+        margin: 10px auto;
+      }
+      h5 {
+        font-size: 13px;
+        color: black;
+        margin: 5px;
+      }
+
+
     </style>
   </head>
   <body>
@@ -236,9 +285,28 @@
       <div class="title">
         <h1 class="maintitle"> Plan your trip </h1>
         <div class="row">
-          <h3>I'm traveling to: </h3>
-          <input class="inputBox" type="text" name="destination" id="destination" placeholder="City (e.g., Barcelona or Guangzhou)" maxlength="35">
-          <input type="submit" class="form" id="form">
+
+    <main>
+          <table class = "form-travel">
+
+            <tr id="form-destination" class="iw-table-row">
+              <td class="iw-attribute-name">  <h3>I'm Going To:  </h3> </td>
+              <td id="form-content" >  <input class="inputBox" type="text" placeholder="City or Neighborhood (e.g., London, Beirut, Noe Valley, San Francisco)" maxlength="35"> </td>
+            </tr>
+            <tr id="form-arriving" class="iw-table-row">
+              <td class="iw-attribute-name"><h3>  Arriving:  </h3></td>
+              <td id="form-content">    <input type="date" class="form-content arriving" value="example" min="2016-02-01">    </td>
+            </tr>
+            <tr id="form-departing" class="iw-table-row">
+              <td class="iw-attribute-name"><h3>  Departing: </h3></td>
+              <td id="form-content">  <input type="date" class="form-content departing" value="example" max="2016-12-31">      </td>
+            </tr>
+            <tr id="form-submit" class="iw-table-row">
+            <th colspan="2" class=iw-table-row> <input type="submit" class="form" id="form"> </th>
+
+            </tr>
+          </table>
+    </main>
         </div>
 
       </div>
@@ -253,7 +321,10 @@
           <h2 class="headertext">Get Oriented:
           </h2>
 
-        <input type="submit" class="searchHotel" value="Search Hotels">
+          <p>Build your itinerary by searching for activities, restaurants, and other points of interest and adding your favorites to your travel list.  You can do this by clicking on a pin from your search result and selecting "Add to Itinerary."  You may click on the suggested searches below or enter your own keywords into the free-form text box.</p>
+        <div class="center"><input type="submit" class="searchHotel" value="Hotels">
+        <input type="submit" class="searchRestaurants" value="Restaurants">
+        <input type="submit" class="searchMuseums" value="Museums"></div>
 
   <div style="display: none">
       <div id="windowContent">
@@ -275,36 +346,57 @@
           <tr id="iw-rating" class="iw-table-row">
             <td class="iw-attribute-name">  Rating:  </td>
             <td id="iw-rating-content">            </td>
+          <tr id="iw-placeId">
+            <td class="iw-attribute-name">  PlaceID:  </td>
+            <td id="iw-placeId-content">            </td>
+          </tr>
+          </tr>
+          <tr id="iw-itinerary" class="iw-table-row">
+            <th colspan="2" id="iw-itinerary-content"> </th>
           </tr>
         </table>
       </div>
   </div>
-
-<!-- infowindow content that above html is building out
-  infowindow.setContent('<div class="iw-placeName"><h3>' + placefound.name + '</h3><br>' +
-div: iw-address // -name (Address:) and -content (fill)
-  placefound.vicinity +
-div: iw-rating // -name (Rating:) and -content (fill)
-  '<br> <strong>Rating: ' + placefound.rating + '</strong></div>')
-  infowindow.open(map, this); -->
-
-
       </div>
+
           <div id="map">  </div>
         <div class="placessearchsection">
 
           <h3>I'm looking for:   </h3>
-          <input id="placessearch" type="text" placeholder="Search places here (e.g., food, museums, temples, bars)"> <input type="submit" class="search" value="Search">
+          <input id="placessearch" type="text" placeholder="Keywords (e.g., Coffee, Library, Park)">
+          <input type="submit" class="search" value="Search">
+
         </div>
     </section>
 
 
-    <section class="module pageThree">
-      <div class="Day1">
+<section class="module pageThree">
 
+<!-- Displays the calculated number of days and nights of stay -->
+    <div style="display: hidden">
+      <div id="itinerary-header">
       </div>
+    </div>
 
-    </section>
+<main>
+ <div class="itinerary-body"><h2> Your Itinerary </h2>
+   <p>Once you've added to your itinerary, you'll see the saved results both below and on the map.  View your full itinerary or filer by a specific day.   </p>
+   <input type="button" class="load-itinerary" value="Load Full Itinerary">
+
+
+<div id="sort-by-date">
+    <!-- buttons with dates belong here -->
+</div>
+</div>
+
+<div style="display: hidden">
+ <div id="activities">
+
+ </div>
+</div>
+
+</main>
+</section>
 
 
   <script type="text/javascript">
@@ -313,62 +405,92 @@ div: iw-rating // -name (Rating:) and -content (fill)
   var marker;
   var infowindow;
   var places;
-
   var markers = [];
-  var findPlace;
+  var itinerary = [];
+  var byMarker;
 
-  //save the Submit button, the city entered, and its coordinates as global variables
-  var button = document.querySelector("input.form");
+//save the Submit button, the city entered, and its coordinates as global variables
   var city;
   var userSelectLat;
   var userSelectLng;
+//setting date variables in global scope to allow callback functions to retrieve variables once called
+  var arriveDate;
+  var departDate;
+  var dateDiffDays;
+  var dateDiffNights;
+  var day;
+  var formattedDates;
+  var formattedDatesObj = {};
+  var createButtons = false;
+
+
+//Various buttons used for triggering events
+  var button = document.querySelector("input.form");
+  var searchHotelButton = document.querySelector("input.searchHotel");
+  var searchRestaurantButton = document.querySelector("input.searchRestaurants");
+  var searchMuseumButton = document.querySelector("input.searchMuseums");
+
+
+  var search = document.querySelector("input.search"); //Search button for keywords in second section
+  var div = document.querySelector("#sort-by-date");
+  var activities = document.querySelector("#activities")
+
+  var loadItinerary = document.querySelector("input.load-itinerary"); //Load Itinerary button in third section
 
   //add an event listener which re-centers the map based on the city the user enters and submits.  also sets location bias for the places search below.
   button.addEventListener("click", getLocation);
+  button.addEventListener("click", calculateDays)
 
-  //save the search hotels button as a global variable
-  var searchHotelButton = document.querySelector("input.searchHotel");
-  searchHotelButton.addEventListener("click", searchHotel)
-
-  //save the Search button of the place for which the user is looking as a variable
-  var search = document.querySelector("input.search");
   // add an event listener which searches for the place/activity the user selects via the Google Places API and plots these results on the map based on the city name s/he entered at top of page.
+  searchHotelButton.addEventListener("click", searchHotel)
+  searchRestaurantButton.addEventListener("click", searchRestaurant)
+  searchMuseumButton.addEventListener("click", searchRestaurant)
   search.addEventListener("click", searchOther);
+  loadItinerary.addEventListener("click", loadItineraryf)
 
-  // initiates map and sets location to San Francisco
+
+
+  // initiates map and sets location to San Francisco on page load
   function initMap() {
     var myLatlng = {lat: 37.7751, lng: -122.4194};
     map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 15,
+      zoom: 14,
+      scrollwheel: false,
       center: myLatlng
     });
     infowindow = new google.maps.InfoWindow({
       content: document.getElementById("windowContent")
     });
   }
-  //adds animation of scroll down to map when the user clicks the Submit button
+  // adds animation of scroll down to map when the user clicks the Submit button
   $(document).ready(function (){
           $("#form").click(function (){
+            if (city) {
               $('html, body').animate({
                   scrollTop: $("#map").offset().top
               }, 800);
+            }
           });
       });
 
-//helper functions
-  // Uses Google Maps Geocode API to request a JSON response for a query on the city entered by the user
+
+//HELPER FUNCTIONS
+
+// Uses Google Maps Geocode API to request a JSON response for a query on the city entered by the user
   function getLocation(event) {
     event.preventDefault()
-    //store city entered into a variable, put it in quotes, and add that to the geocode URL
-    city = document.querySelector("input#destination.inputBox").value;
-    var cityInQuotes = "\"" + city + "\""
-    var geocodeURL = "https://maps.googleapis.com/maps/api/geocode/json?address="+cityInQuotes+"AIzaSyBMEriLb8zqxFSVBWArM6n3MxonN5d-cLY";
-    //return JSON and get re-center map based on location input by user
-    $.get(geocodeURL,printCoordinates)
+    city = document.querySelector("input.inputBox").value;
+    if (city) {
+      var cityInQuotes = "\"" + city + "\""
+      var geocodeURL = "https://maps.googleapis.com/maps/api/geocode/json?address="+cityInQuotes+"AIzaSyBMEriLb8zqxFSVBWArM6n3MxonN5d-cLY";
+      //return JSON and get re-center map based on location input by user
+      $.get(geocodeURL,printCoordinates)
+    } else {
+      alert("Oops, did you input your travel city and dates?");
+    }
   }
 
-  // Saves the coordinates as global variables and re-centers the map based on the new coordinates
-  // Use Google Geocide API to retrieve coordinates for loctaion which user has entered
+// Saves the new coordinates retrieved from Google Maps Geocode API as global variables and re-centers the map based on the new coordinates submitted by user. This also sets the location bias for searches (e.g., when the user searches for hotels in the second section, the results will be pre-set within a certain radius of the user-entered city)
   function printCoordinates(results) {
     if (results.status === "ZERO_RESULTS") {
       alert("Hmm, that location couldn't be found. Try searching for a city or more specific location.")
@@ -381,36 +503,40 @@ div: iw-rating // -name (Rating:) and -content (fill)
     map.setCenter(relocate);
   }
 
-
-
+//Callback functions that passing either a pre-specified term or by user input term as a parameter of another function
   function searchHotel(){
     searchPlace(event,"hotel");
   }
-
+  function searchRestaurant(){
+    searchPlace(event,"restaurant");
+  }
+  function searchHotel(){
+    searchPlace(event,"hotel");
+  }
   function searchOther() {
     userSearch = document.querySelector("#placessearch").value;
     searchPlace(event,userSearch)
   }
 
-    // Searches the type of place using Google Places library (Google Maps Javascript API) and plots results on the map
+    // Searches for places by keyword using Google Places library (Google Maps Javascript API) and plots results on the map
     function searchPlace(event, searchresult) {
       event.preventDefault();
       if (city == undefined) {
         alert("Enter the name of the city to which you're traveling above")
       } else {
         places = new google.maps.places.PlacesService(map);
-
+  //Accessing Google Maps Places API using required parameters (user selected coordinates, radius, and keyword) to produce the results via Nearby Search, then clears markers from map before dropping new markers for each result
     places.nearbySearch({
       location: {lat: userSelectLat, lng: userSelectLng},
-      radius: 2000,
+      radius: 2500,
       keyword: [searchresult],
       types: [searchresult],
-      // rankby: google.maps.places.RankBy.PROMINENCE
+      rankby: google.maps.places.RankBy.PROMINENCE
     }, function(results, status) {
         if (status === google.maps.places.PlacesServiceStatus.OK) {
           clearMarkers();
-      // Loops through each of the results in the nearbysearch. Clear any markers already on the map and remove them from the marker array.  Then pass new results through createMarker function.
-
+          hideMarkers();
+      //For each result, create a marker with relevant information
         for (var i = 0; i < results.length; i++) {
           var placeLoc = results[i].geometry.location
           markers[i] = new google.maps.Marker({
@@ -418,66 +544,71 @@ div: iw-rating // -name (Rating:) and -content (fill)
             animation: google.maps.Animation.DROP,
             placeResult: results[i]
          });
+        //When user clicks on a marker, it fires a function that displays a window containing information about the place
           google.maps.event.addListener(markers[i],'click', showInfoWindow);
           setTimeout(dropMarker(i), i*20);
-
         }
         }
       });
       }
     }
-
+  //Clears markers from the map (this does erase contents from the markers array since we do not need to retain search results)
     function clearMarkers() {
       for (var i = 0; i < markers.length; i++) {
         if (markers[i]) {
           markers[i].setMap(null);
         }
-      }
-      markers = []
+      }  markers = [];
     }
-
+  //When a search is made, these functions hides/show items in itinerary array (does not erase contents of itinerary)
+    function hideMarkers() {
+      var itineraryFormatted = itinerary.map( function(activity) { return activity.marker });
+      itineraryFormatted.forEach( function(marker) {marker.setVisible(false); });
+    }
+    function unHideMarkers() {
+      var itineraryFormatted = itinerary.map(function (activity) { return activity.marker });
+      itineraryFormatted.forEach( function(marker) {marker.setVisible(true); });
+    }
+  //Drops markers on map for each result
     function dropMarker(i) {
       return function() {
         markers[i].setMap(map);
       };
     }
 
-
-
-  // For each of the results of the nearbysearch, plots a marker, which if clicked on, displays a window showing the place name, address, and rating.
-
+  // Function that produces a window containing information about each place
   function showInfoWindow() {
     var marker = this;
-
     places.getDetails({ placeId: marker.placeResult.place_id}, function(place, status) {
       if (status !== google.maps.places.PlacesServiceStatus.OK) {
         return;
       }
       infowindow.open(map,marker);
-      buildInfoWindowContent(place);
+      buildInfoWindowContent(place,marker);
     });
   }
-
-
-  function buildInfoWindowContent(place) {
+//Function that builds content inside of window and into itinerary by appending elements to the page (if available)
+  function buildInfoWindowContent(place,marker) {
     document.getElementById('iw-placeName-content').innerHTML = '<b><h3><a href="' + place.website + '">' + place.name + '</a></h3></b>';
 
-    if (place.photos[0].getUrl({maxWidth:300}) !== undefined) {
+    if (place.photos !== undefined && place.photos[0].getUrl({maxWidth:285})) {
       document.getElementById('iw-picture').style.display = '';
-      document.getElementById('iw-picture-content').innerHTML = '<img src="' + place.photos[0].getUrl({ maxWidth:300, maxHeight: 150}) + '"/>';
+      document.getElementById('iw-picture-content').innerHTML = '<img src="' + place.photos[0].getUrl({ maxWidth:285, maxHeight: 150}) + '"/>';
     } else {
+      console.log('picture not available')
       document.getElementById('iw-picture').style.display = 'none';
-    }
+      }
+
     document.getElementById('iw-address-content').textContent = place.vicinity;
 
     if (place.formatted_phone_number) {
-    document.getElementById('iw-phone').style.display = '';
-    document.getElementById('iw-phone-content').textContent =
-        place.formatted_phone_number;
+      document.getElementById('iw-phone').style.display = '';
+      document.getElementById('iw-phone-content').textContent = place.formatted_phone_number;
     } else {
+      console.log('phone number not available')
       document.getElementById('iw-phone').style.display = 'none';
     }
-console.log(place.rating)
+
     if (place.rating) {
       var ratingHtml = '';
       for (var i = 0; i < 5; i++) {
@@ -487,11 +618,186 @@ console.log(place.rating)
       document.getElementById('iw-rating').style.display = '';
       document.getElementById('iw-rating-content').innerHTML = ratingHtml + " (" + place.rating + "/5)";
       }
-    } else {
-        document.getElementById('iw-rating').style.display = 'none';
-      }
+        } else {
+          console.log('rating not available')
+            document.getElementById('iw-rating').style.display = 'none';
+          }
+    document.getElementById('iw-placeId-content').innerHTML = place.place_id
+    document.getElementById('iw-placeId').style.display = 'none';
+    var placeid = place.place_id;
+
+    document.getElementById('iw-itinerary-content').innerHTML = '<input type="button" id="iw-itinerary-button" value="Add to Itinerary" > ' ;
+    var addButton = document.querySelector("#iw-itinerary-button")
+
+ //When the user clicks on the "Add to Itinerary" button in an info window, this fires a function that stores relevant information in the itinerary array and then creates and appends elements to the page on which to display the saved results
+    addButton.addEventListener("click", function() {
+      day = parseInt(prompt("Which day of your vacation to you plan on going? (Enter a number, e.g., 1 which represents the first day you arrive)"));
+      console.log(day);
+      if (day > dateDiffDays || day < 1 || !day) {
+        day = parseInt(prompt("You entered an invalid day. It must be a number from 1 to " + dateDiffDays));
+      };
+      day = day.toString();
+      var objDate = {};
+      objDate[day] = formattedDates[day-1];
+      itinerary[itinerary.length] = {
+        "name": place.name,
+        "day": day,
+        "dayObj": objDate,
+        "placeid": place.place_id,
+        "address": place.vicinity,
+        "photo": place.photos,
+        "phone": place.formatted_phone_number,
+        "marker": marker
+      };
+      itinerary[itinerary.length-1].marker.animation = google.maps.Animation.DROP;
+      console.log(itinerary);
+
+      var activityContainer = document.createElement("div");
+      var activityName = document.createElement("div");
+      var activityAddr = document.createElement("div");
+      var activityImage = document.createElement("img");
+
+      activityContainer.appendChild(activityImage);
+      document.getElementById('Day ' + day).appendChild(activityContainer)
+      activityContainer.appendChild(activityName);
+      activityContainer.appendChild(activityAddr);
+
+      activityContainer.setAttribute("id", "activity-container")
+      activityName.classList.add("activity-name");
+      activityAddr.classList.add("activity-address");
+
+      activityName.innerHTML = "<h4>" + place.name + "</h4>";
+      activityAddr.innerHTML = "<h5><b> Address: </b>" + place.vicinity + "</h5>";
+      if (place.photos !== undefined && place.photos[0].getUrl({maxWidth:285})) {
+        activityImage.textContent = place.photos[0];
+        activityImage.setAttribute("src", place.photos[0].getUrl({ maxWidth:200, maxHeight: 100}));
+      } else {
+        activityImage.style.display = 'none';
+        }
+
+    })
+  }
+
+  // DATE functions
+  //Function which calculates the days in between the user input departure and arrival dates, displays summary text that shows the length of the vacation, posts all individual travel dates as buttons which allows the user to filter through saved results in his/her itinerary, and finally appends header divs for each day to the page
+  function calculateDays() {
+    arriveDate = document.querySelector("input.form-content.arriving").value;
+    departDate = document.querySelector("input.form-content.departing").value;
+
+    console.log("arrival: " + arriveDate + ", departure: " + departDate);
+    var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
+    var firstDate = new Date(arriveDate);
+    var firstDateOffset = new Date(firstDate.getTime() + firstDate.getTimezoneOffset()*60000)
+    var secondDate = new Date(departDate);
+    var secondDateOffset = new Date(secondDate.getTime() + secondDate.getTimezoneOffset()*60000)
+        year = firstDateOffset.getFullYear();
+        month = firstDateOffset.getMonth();
+        day = firstDateOffset.getDate();
+        dates = [firstDateOffset];
+    //Pushes travel dates into array in global scope
+    while (dates[dates.length-1] < secondDate) {
+      day++
+      dates.push(new Date(year, month, day))
     }
 
+    formattedDates = dates.map(function(date) {
+      return date.toString().split(" ").slice(0,3).join(" ")
+    })
+
+    formattedDates.forEach(function(date) {
+      if (formattedDates.indexOf(date) < 0) {
+        formattedDatesObj[1] = date;
+      }
+      else formattedDatesObj[formattedDates.indexOf(date)+1] = date;
+    })
+
+    //Calculates the number of days and nights of travel based on user input arrival/departure dates.  Uses the numbers to display summary on screen
+    dateDiffDays = Math.round((Math.abs(firstDate.getTime() - secondDate.getTime())/oneDay))+1
+    dateDiffNights = dateDiffDays - 1;
+    document.getElementById('itinerary-header').style.display = ''
+    if (dateDiffNights > 1) {
+      document.getElementById('itinerary-header').innerHTML = "<h2>You are spending </h2><h1>" + dateDiffDays + " days </h1><h2>and </h2><h1> " + dateDiffNights + " nights </h1><h2>in " + city + "</h2>";
+    } else if (dateDiffNights === 1) {
+      document.getElementById('itinerary-header').innerHTML = "<h2>You are spending </h2><h1>" + dateDiffDays + " days </h1><h2>and </h2><h1>" + dateDiffNights + " night</h1><h2> in " + city + "</h2>";
+    } else if (dateDiffNights === 0) {
+      document.getElementById('itinerary-header').innerHTML = "<h2>You are spending </h2><h1>" + dateDiffDays + " glorious day </h1><h2> in " + city + "... perhaps you can consider taking a real vacation sometime soon!</h2>";
+    }
+
+  //If the user has not already submitted the dates, append the appropriate date/buttons to section three
+    if (!createButtons) {
+      for (var key in formattedDatesObj) {
+        createButtons = true;
+        var sortByDay = document.createElement("input");
+      //Creates an event listener for each date/button, which, when pressed, will execute the Load Itinerary function based on the selected date.  Used an IIFE to store the value of the key at the time of the loop. This would prevent the last value of the key to be executed by the time the user clicks on the button.
+        (function(_key){
+          sortByDay.addEventListener("click", function() {
+            loadItineraryf(parseInt(_key));
+          })
+        })(key);
+
+      //Appends buttons to page
+        div.appendChild(sortByDay);
+        sortByDay.setAttribute("type", "button");
+        sortByDay.classList.add("individual-date")
+        // sortByDay.setAttribute("id", "activity-date-sorter-" + key);
+        sortByDay.setAttribute("value", formattedDatesObj[key]);
+
+      //Prints actual itinerary headers to page if they do not already exist.
+        if (document.getElementById("Day " + key) === null) {
+          var activityHeader = document.createElement("div");
+          activityHeader.setAttribute("id", "Day " + day);
+
+          activities.appendChild(activityHeader);
+          activityHeader.setAttribute("id", "Day " + key);
+          activityHeader.innerHTML = "<h3> Day " + key + ": " + formattedDatesObj[key] + "</h3>";
+        }
+      }
+    }
+  }
+
+//Function that is called when either the "Load full itinerary" button or any of the individual date buttons are clicked.  Shows full or filters by select dates in itinerary both via MARKERS on map (to show location) and ACTUAL TEXT/IMAGE CONTENT appended to page
+  function loadItineraryf(day) {
+  //if a day is provided as argument, filter activities by the specified day in itinerary, show the specified markers on a map, and hide activities for all other days in itinerary.
+    if (typeof day == "number") {
+      var daysFiltered = itinerary.filter( function(activity) {
+        return activity.day == parseInt(day);
+      });
+    // Filter and hide activities outside of the specified date MARKER
+      var hideDays = itinerary.filter( function(activity) {
+        return activity.day !== parseInt(day);
+      });
+      var hideDaysByMarker = hideDays.map( function(activity) { return activity.marker });
+      hideDaysByMarker.forEach( function(marker) { marker.setVisible(false); });
+    //Filter and hide activities outside of the specified date SCREEN CONTENT
+      // document.getElementById("Day " + day).style.display = '';
+      for (var i = 1; i <= formattedDates.length; i++) {
+        if (i === day) {
+        document.getElementById("Day " + i).style.display = '';
+        } else {
+        document.getElementById("Day " + i).style.display = 'none';
+        }
+      };
+    } else {
+    //Show all activities in itinerary
+      var daysFiltered = itinerary;
+      for (var i = 1; i <= formattedDates.length; i++) {
+        document.getElementById("Day " + i).style.display = '';
+      };
+    }
+    //Create a variable that accesses the filtered itinerary and creates a new array which organizes the data by marker (for dropping markers)
+    var byMarker = daysFiltered.map( function(activity) { return activity.marker })
+    byMarker.forEach( function(marker) {marker.setVisible(true); });
+    clearMarkers();
+    for (var i = 0; i < daysFiltered.length; i++) {
+      itinerary[i].marker.animation = google.maps.Animation.DROP
+      setTimeout(dropItineraryMarker(i), i*80);
+      function dropItineraryMarker(i) {
+        return function() {
+            byMarker[i].setMap(map)
+          }
+          };
+      }
+  };
 
   </script>
 
