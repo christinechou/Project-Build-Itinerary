@@ -444,7 +444,7 @@
   // add an event listener which searches for the place/activity the user selects via the Google Places API and plots these results on the map based on the city name s/he entered at top of page.
   searchHotelButton.addEventListener("click", searchHotel)
   searchRestaurantButton.addEventListener("click", searchRestaurant)
-  searchMuseumButton.addEventListener("click", searchRestaurant)
+  searchMuseumButton.addEventListener("click", searchMuseum)
   search.addEventListener("click", searchOther);
   loadItinerary.addEventListener("click", loadItineraryf)
 
@@ -510,8 +510,8 @@
   function searchRestaurant(){
     searchPlace(event,"restaurant");
   }
-  function searchHotel(){
-    searchPlace(event,"hotel");
+  function searchMuseum(){
+    searchPlace(event,"museum");
   }
   function searchOther() {
     userSearch = document.querySelector("#placessearch").value;
