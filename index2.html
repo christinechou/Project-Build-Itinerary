@@ -295,11 +295,11 @@
             </tr>
             <tr id="form-arriving" class="iw-table-row">
               <td class="iw-attribute-name"><h3>  Arriving:  </h3></td>
-              <td id="form-content">    <input type="date" class="form-content arriving" value="example" min="2016-02-01">    </td>
+              <td id="form-content">    <input type="date" class="form-content arriving" value="Date (mm/dd/yyyy)" min="2016-02-01">    </td>
             </tr>
             <tr id="form-departing" class="iw-table-row">
               <td class="iw-attribute-name"><h3>  Departing: </h3></td>
-              <td id="form-content">  <input type="date" class="form-content departing" value="example" max="2016-12-31">      </td>
+              <td id="form-content">  <input type="date" class="form-content departing" value="Date (mm/dd/yyyy)" max="2016-12-31">      </td>
             </tr>
             <tr id="form-submit" class="iw-table-row">
             <th colspan="2" class=iw-table-row> <input type="submit" class="form" id="form"> </th>
@@ -693,7 +693,7 @@
         day = firstDateOffset.getDate();
         dates = [firstDateOffset];
     //Pushes travel dates into array in global scope
-    if (arriveDate && departDate && firstDateOffset < secondDateOffset) {
+    if (arriveDate && departDate && firstDateOffset <= secondDateOffset) {
     while (dates[dates.length-1] < secondDate) {
       day++
       dates.push(new Date(year, month, day))
