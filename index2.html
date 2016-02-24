@@ -486,7 +486,7 @@
       //return JSON and get re-center map based on location input by user
       $.get(geocodeURL,printCoordinates)
     } else {
-      alert("Oops, did you input your travel city and dates?");
+      alert("Oops, did you input your travel city?");
     }
   }
 
@@ -632,7 +632,6 @@
  //When the user clicks on the "Add to Itinerary" button in an info window, this fires a function that stores relevant information in the itinerary array and then creates and appends elements to the page on which to display the saved results
     addButton.addEventListener("click", function() {
       day = parseInt(prompt("Which day of your vacation to you plan on going? (Enter a number, e.g., 1 which represents the first day you arrive)"));
-      console.log(day);
       if (day > dateDiffDays || day < 1 || !day) {
         day = parseInt(prompt("You entered an invalid day. It must be a number from 1 to " + dateDiffDays));
       };
@@ -684,7 +683,6 @@
     arriveDate = document.querySelector("input.form-content.arriving").value;
     departDate = document.querySelector("input.form-content.departing").value;
 
-    console.log("arrival: " + arriveDate + ", departure: " + departDate);
     var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
     var firstDate = new Date(arriveDate);
     var firstDateOffset = new Date(firstDate.getTime() + firstDate.getTimezoneOffset()*60000)
@@ -695,6 +693,7 @@
         day = firstDateOffset.getDate();
         dates = [firstDateOffset];
     //Pushes travel dates into array in global scope
+    if (arriveDate && departDate && firstDateOffset < secondDateOffset) {
     while (dates[dates.length-1] < secondDate) {
       day++
       dates.push(new Date(year, month, day))
@@ -752,6 +751,8 @@
           activityHeader.innerHTML = "<h3> Day " + key + ": " + formattedDatesObj[key] + "</h3>";
         }
       }
+    }} else {
+        alert("Dates aren't valid.  Try again!");
     }
   }
 
