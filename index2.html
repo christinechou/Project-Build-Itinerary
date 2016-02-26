@@ -302,7 +302,7 @@
               <td id="form-content">  <input type="date" class="form-content departing" value="Date (mm/dd/yyyy)" max="2016-12-31">      </td>
             </tr>
             <tr id="form-submit" class="iw-table-row">
-            <th colspan="2" class=iw-table-row> <input type="submit" class="form" id="form"> </th>
+            <th colspan="2" class=iw-table-row> <input type="submit" value="Submit" class="form" id="form"> </th>
 
             </tr>
           </table>
@@ -477,8 +477,7 @@
 //HELPER FUNCTIONS
 
 // Uses Google Maps Geocode API to request a JSON response for a query on the city entered by the user
-  function getLocation(event) {
-    event.preventDefault()
+  function getLocation() {
     city = document.querySelector("input.inputBox").value;
     if (city) {
       var cityInQuotes = "\"" + city + "\""
@@ -505,22 +504,21 @@
 
 //Callback functions that passing either a pre-specified term or by user input term as a parameter of another function
   function searchHotel(){
-    searchPlace(event,"hotel");
+    searchPlace("hotel");
   }
   function searchRestaurant(){
-    searchPlace(event,"restaurant");
+    searchPlace("restaurant");
   }
   function searchMuseum(){
-    searchPlace(event,"museum");
+    searchPlace("museum");
   }
   function searchOther() {
     userSearch = document.querySelector("#placessearch").value;
-    searchPlace(event,userSearch)
+    searchPlace(userSearch)
   }
 
     // Searches for places by keyword using Google Places library (Google Maps Javascript API) and plots results on the map
-    function searchPlace(event, searchresult) {
-      event.preventDefault();
+    function searchPlace(searchresult) {
       if (city == undefined) {
         alert("Enter the name of the city to which you're traveling above")
       } else {
