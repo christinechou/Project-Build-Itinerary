@@ -1,0 +1,262 @@
+  /*Google map setup*/
+  html, body {
+    height: 100%; margin: 0; padding: 0;
+  }
+  #map {
+    width: 100%;
+    min-height: 420px;
+  }
+  body {
+    font-family: 'Raleway',sans-serif;
+    color:white;
+    size: 26px;
+  }
+  main {
+    margin: 1.5em auto;
+    background: rgba(255,255,255,0.8);
+    box-shadow: 4px 4px 10px 0 rgba(0, 0, 0, 0.2);
+    padding: 2em 3em;
+    max-width: 600px;
+  }
+  h1 {
+    font-family: "Poiret One";
+    text-transform: uppercase;
+    font-size: 3em;
+    color: black;
+  }
+  h2 {
+    text-align: center;
+    font-family: "Poiret One";
+    font-size: 2em;
+    color:black;
+    /*color: #dbf0ff;*/
+  }
+  section.module {
+    height:700px;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    margin-left: 0px;
+    margin-right:0px;
+  }
+  /*Page One*/
+  section.pageOne{
+    background-image: url(../photos/bergen.jpg);
+    margin-top:-15px;
+    height:720px;
+  }
+  .maintitle {
+    margin-top: 200px;
+  }
+  .title {
+    text-align: center;
+    padding-top: 30px;
+    margin: 10px auto;
+  }
+  .row {
+    text-align: center;
+  }
+  h3 {
+    color: black;
+    font-family: "Poiret One";
+    padding-left:10px;
+    padding-right:10px;
+    margin: 0 auto;
+  }
+  .inputBox, .form-content  {
+    background: transparent;
+    border: 1.5px solid black;
+    width: 240px;
+    margin: 4px auto;
+    padding: 3px;
+    font-family: 'Raleway';
+    font-size: 15px;
+    height: 18px;
+    color: black;
+  }
+  .form-content.arriving, .form-content.departing {
+    font-size: 12px;
+    height: 15px;
+  }
+
+  #form, input.search, input.searchHotel, input.searchRestaurants, input.searchMuseums, .load-itinerary {
+    font-family: 'Raleway';
+    text-transform: uppercase;
+    font-size: 15px;
+    padding: 5.5px;
+    display: block;
+    background: transparent;
+    border: 1.5px solid black;
+    text-align: center;
+    margin: 10px auto;
+  }
+  input.search, input.searchHotel, input.searchRestaurants, input.searchMuseums, .load-itinerary {
+    display: inline-block !important;
+    margin: 0 auto;
+    font-size: 13px;
+  }
+  /*Page Two*/
+  section.pageTwo{
+    height:760px !important;
+    background-color: #f0f0f0;
+  }
+  .form-travel {
+    text-align: left;
+    margin: 0 auto;
+
+  }
+  .headertext {
+    color: black !important;
+    text-align: left !important;
+    margin: 0 0 0 20px;
+  }
+  p {
+    color:black;
+    margin-left: 40px;
+    margin-right: 40px;
+    font-size: 14px;
+  }
+  .center {
+    text-align: center;
+    padding-bottom: 20px;
+  }
+
+  div.header {
+    border-top: 5px solid black;
+  }
+  .pagedividerarrow {
+    width: 0;
+    height: 0;
+    border-left: 40px solid transparent;
+    border-right: 40px solid transparent;
+    border-top: 40px solid black;
+    margin-left: 80%;
+  }
+  div.placessearchsection h3 {
+    display: inline-block;
+  }
+  #placessearch {
+    display:inline-block;
+    background: transparent;
+    border: 1.5px solid black;
+    width: 320px;
+    margin: 15px auto;
+    padding: 5px;
+    font-family: 'Raleway';
+    font-size: 14px;
+    color: black;
+  }
+
+  #windowContent {
+    color: black;
+  }
+  #placeName h3 {
+    padding: 0 !important;
+  }
+  .iw-table-row {
+    height:18px;
+  }
+  .iw-attribute-name {
+    font-weight: bold;
+    text-align: right;
+  }
+  .iw-picture {
+    text-align: center;
+  }
+  #iw-itinerary {
+    font-family: 'Poiret One';
+  }
+  #iw-itinerary-button, .individual-date {
+    text-transform: uppercase;
+    font-family: "Poiret One";
+    padding-right: 10px;
+    margin: 0 auto;
+    background: transparent;
+    border: 0px;
+    text-align: center;
+    transition: all 0.3s ease;
+    transition-property: all;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+    transition-delay: initial;
+  }
+  #iw-itinerary-button:hover, .individual-date:hover {
+    color: #a3c2c2;
+  }
+
+  /*Page Three*/
+  section.pageThree{
+    background-image: url(../photos/bergen.jpg);
+    height:1400px;
+  }
+
+  #itinerary-header {
+    text-align: center;
+    padding-top: 40px;
+  }
+  #itinerary-header h2 {
+    display:inline-block;
+  }
+
+  .itinerary-body {
+    text-align: center;
+  }
+  #sort-by-date {
+    margin-bottom: 15px;
+    margin-top:10px;
+  }
+  .individual-date {
+    font-size: 13px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  .individual-date:not(:last-child) {
+    border-right: 1px solid black
+  }
+
+  .pageThree h1 {
+    display: inline-block;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 2.5em;
+  }
+  .pageThree h3 {
+    margin: 10px;
+    padding: 5px;
+    border-bottom: 1px solid #202060;
+  }
+  #activity-container {
+    overflow: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  #activity-container:not(:last-child) {
+    margin-bottom: 1em;
+    padding-bottom: 1em;
+    border-bottom: 1px solid #d8d8da;
+  }
+
+  .activity-name {
+    font-size: 1em;
+    font-weight: bold;
+    margin-bottom: .5em;
+    color: #384047;
+  }
+
+  .pageThree img {
+    float: left;
+    width: 100px;
+    margin-right: 20px;
+  }
+
+  h4 {
+    font-size: 16px;
+    color: #4f5963;
+    margin: 10px auto;
+  }
+  h5 {
+    font-size: 13px;
+    color: black;
+    margin: 5px;
+  }
