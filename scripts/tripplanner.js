@@ -32,7 +32,6 @@ var app = {
   // Uses Google Maps Geocode API to request a JSON response for a query on the city entered by the user
   grabCoordinates: function() {
     var city = document.querySelector("input.inputBox").value;
-    city = "bergen"
     app.city = city;
     if (city) {
       var cityInQuotes = "\"" + city + "\""
@@ -51,7 +50,6 @@ var app = {
     } else {
       app.myLatLng.lat = results.results[0].geometry.location.lat;
       app.myLatLng.lng = results.results[0].geometry.location.lng;
-      console.log(app.myLatlng);
       }
     //Relocates the map based on user input city
     var relocate = new google.maps.LatLng(app.myLatLng);
@@ -359,7 +357,6 @@ var app = {
   //if a day is provided as argument, filter activities by the specified day in itinerary, show the specified markers on a map, and hide activities for all other days in itinerary.
     if (typeof day == "number") {
       var daysFiltered = filterf(app.itinerary,function(activity) {
-        console.log(activity.day);
         return activity.day === parseInt(day);
       });
     // Filter and hide activities outside of the specified date MARKER
