@@ -203,22 +203,15 @@ var app = {
     }  app.markers = [];
   },
 //When a search is made, these functions hide/show items in itinerary and does not erase contents of itinerary
-  hideMarkers: function() {
-    if (!app.markers) return;
+  hideMarkers: function(markers) {
     if (app.itinerary.length !== 0) {
-    var itineraryFormatted = mapf(app.intinerary,function(activity) {
-      return activity.marker
-    });
-    each( itineraryFormatted, function(marker) {
+    each( markers, function(marker) {
       marker.setVisible(false);
     });
     }
   },
-  unHideMarkers: function() {
-    var itineraryFormatted = mapf(app.intinerary, function (activity) {
-      return activity.marker
-    });
-    each(itineraryFormatted,function(marker) {
+  unHideMarkers: function(markers) {
+    each(markers,function(marker) {
       marker.setVisible(true);
     });
   },
@@ -366,9 +359,8 @@ var app = {
       var hideDaysByMarker = mapf(hideDays,function(activity) {
         return activity.marker
       });
-      each(hideDaysByMarker,function(marker) {
-        marker.setVisible(false);
-      });
+      app.hideMarkers(hideDaysByMarker);
+
     //Filter and hide activities outside of the specified date SCREEN CONTENT
       // document.getElementById("Day " + day).style.display = '';
       for (var i = 1; i <= app.listOfDays.length; i++) {
@@ -385,14 +377,14 @@ var app = {
         document.getElementById("Day " + i).style.display = '';
       };
     }
-    //Create a variable that accesses the filtered itinerary and creates a new array which organizes the data by marker (for dropping markers)
+    //Creates a new array which organizes data by marker
     var byMarker = mapf(daysFiltered,function(activity) {
       return activity.marker
     })
-    each( byMarker, function(marker) {
-      marker.setVisible(true);
-    });
+
+    // Clear markers from searches and show items in itinerary for user specified date
     app.clearMarkers();
+    app.unHideMarkers(byMarker);
 
     for (var i = 0; i < daysFiltered.length; i++) {
       app.itinerary[i].marker.animation = google.maps.Animation.DROP;
