@@ -14,11 +14,11 @@
 
 // initiates map and sets location to San Francisco on page load
 function initMap () {
-  var myLatlng = {lat: 37.7751, lng: -122.4194};
+  app.myLatLng = {lat: 37.7751, lng: -122.4194};
   map = new google.maps.Map(document.getElementById('map'), {
     zoom: 14,
     scrollwheel: false,
-    center: myLatlng
+    center: app.myLatLng
   });
   infowindow = new google.maps.InfoWindow({
     content: document.getElementById("windowContent")
@@ -32,7 +32,7 @@ var app = {
   // Uses Google Maps Geocode API to request a JSON response for a query on the city entered by the user
   grabCoordinates: function() {
     var city = document.querySelector("input.inputBox").value;
-    city = "bergen";
+    city = "bergen"
     app.city = city;
     if (city) {
       var cityInQuotes = "\"" + city + "\""
@@ -49,12 +49,12 @@ var app = {
     if (results.status === "ZERO_RESULTS") {
       alert("Hmm, that location couldn't be found. Try searching for a city or more specific location.")
     } else {
-      userSelectLat = results.results[0].geometry.location.lat;
-      userSelectLng = results.results[0].geometry.location.lng;
-      console.log(userSelectLat + ", " + userSelectLng);
+      app.myLatLng.lat = results.results[0].geometry.location.lat;
+      app.myLatLng.lng = results.results[0].geometry.location.lng;
+      console.log(app.myLatlng);
       }
     //Relocates the map based on user input city
-    var relocate = new google.maps.LatLng(userSelectLat, userSelectLng);
+    var relocate = new google.maps.LatLng(app.myLatLng);
     map.setCenter(relocate);
   },
 
@@ -65,8 +65,6 @@ var app = {
     app["markers"] = [];
     arriveDate = document.querySelector("input.form-content.arriving").value;
     departDate = document.querySelector("input.form-content.departing").value;
-    arriveDate = "2016-01-03";
-    departDate = "2016-01-06";
     var firstDate = new Date(arriveDate);
     var firstDateOffset = new Date(firstDate.getTime() + firstDate.getTimezoneOffset()*60000);
     var secondDate = new Date(departDate);
@@ -148,8 +146,6 @@ var app = {
 
 // ****2. USER SEARCHES FOR PLACES/ACTIVITIES USING GOOGLE MAPS****
 
-
-
 // Uses Google Maps Places API to search for places by keyword and plots results on the map
   searchPlace: function(place) {
     if (app.city == undefined) {
@@ -158,7 +154,7 @@ var app = {
       places = new google.maps.places.PlacesService(map);
       //Accessing Google Maps Places API using required parameters (user selected coordinates, radius, and keyword) to produce the results via Nearby Search, then clears markers from map before dropping new markers for each result
     places.nearbySearch({
-      location: {lat: userSelectLat, lng: userSelectLng},
+      location: app.myLatLng,
       radius: 2500,
       keyword: [place],
       types: [place],
@@ -198,7 +194,6 @@ var app = {
       userSearch = document.querySelector("#placessearch").value;
       app.searchPlace(userSearch);
     },
-
 
   //DOM function which clears markers from the map (does erase contents from the markers array since we do not need to retain search results)
   clearMarkers: function() {
@@ -298,7 +293,7 @@ var app = {
       "photo": place.photos,
       "phone": place.formatted_phone_number,
       "marker": marker
-    }; console.log("iw: " + app.iw);
+    };
 
     //Add method which takes itinerary items and uses DOM to create and append elements on page
     app.iw.methodCreateItineraryDOM = app.method;
@@ -329,7 +324,7 @@ var app = {
       "address": this.address,
       "photo": this.photo,
       "phone": this.phone,
-      "day": day,
+      "day": parseInt(day),
       "marker": marker.marker
     }
     app.itinerary[app.itinerary.length-1].marker.animation = google.maps.Animation.DROP;
@@ -364,7 +359,8 @@ var app = {
   //if a day is provided as argument, filter activities by the specified day in itinerary, show the specified markers on a map, and hide activities for all other days in itinerary.
     if (typeof day == "number") {
       var daysFiltered = filterf(app.itinerary,function(activity) {
-        return activity.day == parseInt(day);
+        console.log(activity.day);
+        return activity.day === parseInt(day);
       });
     // Filter and hide activities outside of the specified date MARKER
       var hideDays = filterf(app.itinerary, function(activity) {

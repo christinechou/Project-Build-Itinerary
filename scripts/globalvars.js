@@ -1,15 +1,8 @@
-
-
 //setting map variables outside the initMap function to allow for callback functions to retrieve variables in global scope
   var map;
   var infowindow;
   var places;
   var byMarker;
-
-
-  //save the Submit button, the city entered, and its coordinates as global variables
-  var userSelectLat;
-  var userSelectLng;
 
   //Buttons used for triggering events by section:
   //Section One:
