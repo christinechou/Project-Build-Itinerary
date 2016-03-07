@@ -1,5 +1,3 @@
-
-
   // adds animation of scroll down to map when the user clicks the Submit button
   $(document).ready(function (){
           $("#form").click(function (){
@@ -15,12 +13,12 @@
 // initiates map and sets location to San Francisco on page load
 function initMap () {
   app.myLatLng = {lat: 37.7751, lng: -122.4194};
-  map = new google.maps.Map(document.getElementById('map'), {
+  app.map = new google.maps.Map(document.getElementById('map'), {
     zoom: 14,
     scrollwheel: false,
     center: app.myLatLng
   });
-  infowindow = new google.maps.InfoWindow({
+  app.infowindow = new google.maps.InfoWindow({
     content: document.getElementById("windowContent")
   });
 };
@@ -29,6 +27,34 @@ function initMap () {
 // ****1. USER ENTERS CITY AND DATES****
 
 var app = {
+  initialize: function() {
+    app.map;
+    app.infowindow;
+    app.places;
+    app.div = document.querySelector("#sort-by-date");
+    app.activities = document.querySelector("#activities")
+    //Buttons used for triggering events by section:
+    //Section One:
+    var button = document.querySelector("input.form");
+    //Section Two:
+    var searchHotelButton = document.querySelector("input.searchHotel");
+    var searchRestaurantButton = document.querySelector("input.searchRestaurants");
+    var searchMuseumButton = document.querySelector("input.searchMuseums");
+    var search = document.querySelector("input.search");
+    //Section Three
+    //Event Listeners (NOTE: There are event listeners inside tripplanner.js that are dependent on the context in which user calls the function and must be placed within that function's scope):
+    //Add an event listener which re-centers the map based on the city the user enters and submits, sets location bias for the places search below, and calculates/displays on page length of vacation
+    button.addEventListener("click", app.grabCoordinates);
+    button.addEventListener("click", app.getTravelDates)
+    //Add event listeners which search for the place/activity the user selects or is pre-selected via the Google Places API and plots these results on the map based on the city name s/he entered at top of page.
+    searchHotelButton.addEventListener("click", app.searchHotel)
+    searchRestaurantButton.addEventListener("click", app.searchRestaurant)
+    searchMuseumButton.addEventListener("click", app.searchMuseum)
+    search.addEventListener("click", app.searchOther);
+    //Add an event listener which loads itinerary content on the pag
+    app.loadItinerary = document.querySelector("input.load-itinerary");
+    app.loadItinerary.addEventListener("click", app.loadItineraryf)
+  },
   // Uses Google Maps Geocode API to request a JSON response for a query on the city entered by the user
   grabCoordinates: function() {
     var city = document.querySelector("input.inputBox").value;
@@ -53,7 +79,7 @@ var app = {
       }
     //Relocates the map based on user input city
     var relocate = new google.maps.LatLng(app.myLatLng);
-    map.setCenter(relocate);
+    app.map.setCenter(relocate);
   },
 
 
@@ -95,7 +121,6 @@ var app = {
 
     //Appends dates to document as 1) summary of length of trip in the header,  2) filter buttons, and 3) separaters for all activities in the itinerary by date
     app.printToHeader();
-    each(app.listOfDays, app.printToItineraryFilters);
   },
 
 //Client-side DOM. Displays summary to itinerary (document) and adds content and event listeners to make itinerary interactive (so users can view their saved places in their itinerary for each date (or all dates) in one place).  Number of days and nights of travel are calculated based on user input arrival/departure dates.
@@ -110,6 +135,7 @@ var app = {
     } else if (dateDiffNights === 0) {
       document.getElementById('itinerary-header').innerHTML = "<h2>You are spending </h2><h1>" + dateDiffDays + " glorious day </h1><h2> in " + app.city + "... perhaps you can consider taking a real vacation sometime soon!</h2>";
     }
+    each(app.listOfDays, app.printToItineraryFilters);
   },
   //If the user has not already submitted the dates, append the appropriate date/buttons to section three
   printToItineraryFilters: function(value, index) {
@@ -123,7 +149,7 @@ var app = {
       })(dayOfTrip);
     //Appends buttons to page
     if (document.getElementById("Day "+dayOfTrip) === null) {
-      div.appendChild(sortByDay);
+      app.div.appendChild(sortByDay);
       sortByDay.setAttribute("type", "button");
       sortByDay.classList.add("individual-date")
       // sortByDay.setAttribute("id", "activity-date-sorter-" + key);
@@ -137,7 +163,7 @@ var app = {
     console.log(date, day);
       var activityHeader = document.createElement("div");
       activityHeader.setAttribute("id", "Day " + day);
-      activities.appendChild(activityHeader);
+      app.activities.appendChild(activityHeader);
       activityHeader.setAttribute("id", "Day " + day);
       activityHeader.innerHTML = "<h3> Day " + day + ": " + date + "</h3>";
   },
@@ -149,9 +175,9 @@ var app = {
     if (app.city == undefined) {
       alert("Enter the name of the city to which you're traveling above")
     } else {
-      places = new google.maps.places.PlacesService(map);
+      app.places = new google.maps.places.PlacesService(app.map);
       //Accessing Google Maps Places API using required parameters (user selected coordinates, radius, and keyword) to produce the results via Nearby Search, then clears markers from map before dropping new markers for each result
-    places.nearbySearch({
+    app.places.nearbySearch({
       location: app.myLatLng,
       radius: 2500,
       keyword: [place],
@@ -218,7 +244,7 @@ var app = {
 //Drops markers on map for each result
   dropMarker: function(i) {
     return function() {
-      app.markers[i].setMap(map);
+      app.markers[i].setMap(app.map);
     };
   },
 
@@ -226,16 +252,16 @@ var app = {
   addInfoWindow: function() {
     var marker = this;
     //Uses place_id to access Google Search Details API and retrieve additional information about place
-    places.getDetails({ placeId: marker.placeResult.place_id}, function(place, status) {
+    app.places.getDetails({ placeId: marker.placeResult.place_id}, function(place, status) {
       if (status !== google.maps.places.PlacesServiceStatus.OK) {
         return;
       }
-        infowindow.open(map,marker);
+        app.infowindow.open(app.map,marker);
         app.buildInfoWindowContent(place,marker);
     });
   },
 
-  //Function that builds content about place inside of info window by appending elements to the page (if available)
+  //Function that uses DOM to build content about place inside of info window (if available)
   buildInfoWindowContent: function(place,marker) {
     //adds place name
     document.getElementById('iw-placeName-content').innerHTML = '<b><h3><a href="' + place.website + '">' + place.name + '</a></h3></b>';
@@ -275,7 +301,7 @@ var app = {
 
     var addButton = document.querySelector("#iw-itinerary-button");
 
-  //storing relevant place details to array
+  //Temporarily stores relevant place details in array (for event listener)
     app.iw = [];
     app.iw[app.iw.length] = {
       "name": place.name,
@@ -289,16 +315,15 @@ var app = {
     //Add method which takes itinerary items and uses DOM to create and append elements on page
     app.iw.methodCreateItineraryDOM = app.method;
 
-    //Add event listener which adds place to global itinerary array and appends relevant info about place to the page
+    //Event listener triggered by user selectig "Add to Itinerary" that has been bound to place info on select marker
     addButton.addEventListener("click", function() {
       app.iw.methodCreateItineraryDOM();
     });
-
   },
 
   // ****3. USER INTERACTS WITH ITINERARY (FILTER ACTIVITIES BY DATE)****
 
-  //Takes itinerary items and uses DOM to create and append elements on page
+  //Function uses DOM to create and append user selected place details to itinerary on page
   method: function() {
     //prompts for day user wants to visit place
     var day = parseInt(prompt("Which day of your vacation to you plan on going? (Enter a number, e.g., 1 which represents the first day you arrive)"));
@@ -345,24 +370,30 @@ var app = {
       }
   },
 
-//Function that is called when either the "Load full itinerary" button or any of the individual date buttons are clicked.  Shows full itinerary and/or filters by select dates in itinerary both via MARKERS on map (to show location) and ACTUAL TEXT/IMAGE CONTENT appended to page
+  //Filters activities by the user-selected day in itinerary (or shows full itinerary if user selects "Load Full Itinerary"):
+  //1) Show/hide appropriate markers in map
+  //2) Show/hide appropriate items in itinerary
   loadItineraryf: function(day) {
-  //if a day is provided as argument, filter activities by the specified day in itinerary, show the specified markers on a map, and hide activities for all other days in itinerary.
-    if (typeof day == "number") {
-      var daysFiltered = filterf(app.itinerary,function(activity) {
-        return activity.day === parseInt(day);
-      });
-    // Filter and hide activities outside of the specified date MARKER
-      var hideDays = rejectf(app.itinerary, function(activity) {
-        return activity.day === parseInt(day);
-      });
+    var initialize = typeof day === 'number';
+
+    //If no dates selected, show all activities in itinerary
+    if (!initialize) {
+      var daysFiltered = app.itinerary;
+      for (var i = 1; i <= app.listOfDays.length; i++) {
+        document.getElementById("Day " + i).style.display = '';
+      }
+    } else {
+      var userSelectedDate = function(place) {
+        return place.day === day;
+      };
+      var daysFiltered = filterf(app.itinerary, userSelectedDate);
+      var hideDays = rejectf(app.itinerary, userSelectedDate);
       var hideDaysByMarker = mapf(hideDays,function(activity) {
         return activity.marker
       });
       app.hideMarkers(hideDaysByMarker);
 
-    //Filter and hide activities outside of the specified date SCREEN CONTENT
-      // document.getElementById("Day " + day).style.display = '';
+    //Filter and hide activities outside of the specified date on the page
       for (var i = 1; i <= app.listOfDays.length; i++) {
         if (i === day) {
         document.getElementById("Day " + i).style.display = '';
@@ -370,28 +401,21 @@ var app = {
         document.getElementById("Day " + i).style.display = 'none';
         }
       };
-    } else {
-    //Show all activities in itinerary
-      var daysFiltered = app.itinerary;
-      for (var i = 1; i <= app.listOfDays.length; i++) {
-        document.getElementById("Day " + i).style.display = '';
-      };
     }
-    //Creates a new array which organizes data by marker
+    // Clear markers for all other places on map (places not added to itinerary by user on date specified)
     var byMarker = mapf(daysFiltered,function(activity) {
       return activity.marker
     })
-
-    // Clear markers from searches and show items in itinerary for user specified date
     app.clearMarkers();
     app.unHideMarkers(byMarker);
 
+    // Adding drop animation
     for (var i = 0; i < daysFiltered.length; i++) {
       app.itinerary[i].marker.animation = google.maps.Animation.DROP;
       setTimeout(dropItineraryMarker(i), i*80);
       function dropItineraryMarker(i) {
         return function() {
-            byMarker[i].setMap(map)
+            byMarker[i].setMap(app.map)
           }
         };
       }
