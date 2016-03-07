@@ -353,8 +353,8 @@ var app = {
         return activity.day === parseInt(day);
       });
     // Filter and hide activities outside of the specified date MARKER
-      var hideDays = filterf(app.itinerary, function(activity) {
-        return activity.day !== parseInt(day);
+      var hideDays = rejectf(app.itinerary, function(activity) {
+        return activity.day === parseInt(day);
       });
       var hideDaysByMarker = mapf(hideDays,function(activity) {
         return activity.marker
